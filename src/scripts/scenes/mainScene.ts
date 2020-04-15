@@ -5,6 +5,8 @@ export default class MainScene extends Phaser.Scene {
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
 
+  turn: number;
+
   constructor() {
     super({ key: 'MainScene' });
   }
@@ -17,6 +19,19 @@ export default class MainScene extends Phaser.Scene {
 
   }
 
+  playerTurn() {
+    this.turn = 2;
+  }
+
+  enemyTurn() {
+    this.turn = 1;
+  }
+
   update() {
+    if (this.turn == 1) {
+      this.playerTurn();
+    } else if (this.turn == 2) {
+      this.enemyTurn();
+    }
   }
 }
