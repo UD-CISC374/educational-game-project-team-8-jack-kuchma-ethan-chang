@@ -20,11 +20,18 @@ export default class MainScene extends Phaser.Scene {
   }
 
   playerTurn() {
+    this.drawCard(this.player);
     this.turn = 2;
   }
 
   enemyTurn() {
+    this.drawCard(this.enemy);
     this.turn = 1;
+  }
+
+  //This should take an argument; this.player, this.enemy; something to differentiate
+  drawCard(foo) {
+    foo.count += 1;
   }
 
   update() {
