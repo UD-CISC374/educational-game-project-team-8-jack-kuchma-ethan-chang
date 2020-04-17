@@ -12,6 +12,12 @@ export default class ExampleObject extends Phaser.GameObjects.Image {
         }
         */
         super(scene, x, y, 'card');
+        this.setInteractive();
+        scene.input.setDraggable(this);
+        scene.input.on('drag', (pointer: any, gameObject: this, dragX: number, dragY: number) => {
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+        })
         scene.add.existing(this);
 
     }
