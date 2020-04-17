@@ -1,4 +1,5 @@
 import { GameObjects } from 'phaser';
+import Card from '../objects/card';
 
 export default class MainScene extends Phaser.Scene {
   background: Phaser.GameObjects.Image;
@@ -19,10 +20,19 @@ export default class MainScene extends Phaser.Scene {
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
-    this.card = this.add.image(this.scale.width/2,40,"placeholder");
-    this.card.setInteractive();
+    //this.card = this.add.image(this.scale.width/2,40,"placeholder");
+    //this.card.setInteractive();
     this.input.on('pointerdown',this.startDrag,this);
+
+    this.dealCards();
   }
+
+  dealCards() {
+    for (let i = 0; i < 5; i++) {
+      let playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
+    }
+  }
+
   startDrag(pointer, targets){
     this.input.off('pointerdown',this.startDrag,this);
     this.card = targets[0];
