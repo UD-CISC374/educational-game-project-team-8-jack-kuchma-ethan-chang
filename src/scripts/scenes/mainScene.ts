@@ -30,6 +30,7 @@ export default class MainScene extends Phaser.Scene {
   dealCards() {
     for (let i = 0; i < 5; i++) {
       let playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
+      let enemyCard = new Card(this, 370 + (i*50), 40, 'card_placeholder');
     }
   }
 
