@@ -1,11 +1,20 @@
 import { GameObjects } from 'phaser';
 import Card from '../objects/card';
+import Zone from '../objects/zone';
 
 export default class MainScene extends Phaser.Scene {
   background: Phaser.GameObjects.Image;
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
   card:Phaser.GameObjects.Image;
+
+  zone1: Phaser.GameObjects.Zone;
+  zone2: Phaser.GameObjects.Zone;
+  zone3: Phaser.GameObjects.Zone;
+  zone4: Phaser.GameObjects.Zone;
+  zone5: Phaser.GameObjects.Zone;
+  zone6: Phaser.GameObjects.Zone;
+  zone7: Phaser.GameObjects.Zone;
 
   playerMana: number;
   enemyMana: number = 0;
@@ -25,6 +34,14 @@ export default class MainScene extends Phaser.Scene {
     this.input.on('pointerdown',this.startDrag,this);
 
     this.dealCards();
+
+    this.zone1 = new Zone(this, 90, 250, 60, 80);
+    this.zone2 = new Zone(this, 160, 250, 60, 80);
+    this.zone3 = new Zone(this, 230, 250, 60, 80);
+    this.zone4 = new Zone(this, 300, 250, 60, 80);
+    this.zone5 = new Zone(this, 370, 250, 60, 80);
+    this.zone6 = new Zone(this, 440, 250, 60, 80);
+    this.zone7 = new Zone(this, 510, 250, 60, 80);
   }
 
   dealCards() {
