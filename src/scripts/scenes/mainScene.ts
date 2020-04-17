@@ -4,6 +4,7 @@ export default class MainScene extends Phaser.Scene {
   background: Phaser.GameObjects.Image;
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
+  card:Phaser.GameObjects.Image;
 
   playerMana: number;
   enemyMana: number = 0;
@@ -18,18 +19,35 @@ export default class MainScene extends Phaser.Scene {
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
+    this.card = this.add.image(this.scale.width/2,40,"placeholder");
+    this.card.setInteractive();
+    this.input.on('pointerdown',this.startDrag,this);
+  }
+  startDrag(pointer, targets){
+    this.input.off('pointerdown',this.startDrag,this);
+    this.card = targets[0];
+    this.input.on('pointermove',this.doDrag,this);
+    this.input.on('pointerup',this.stopDrag,this);
+  }
+  doDrag(pointer){
+    this.card.x = pointer.x;
+    this.card.y = pointer.y;
+  }
+  stopDrag(){
+    this.input.on('pointerdown',this.startDrag,this);
+    this.input.off('pointermove',this.doDrag,this);
+    this.input.off('pointerup',this.stopDrag,this);
 
   }
-
-  playerTurn() {
+  /*playerTurn() {
     this.drawCard(this.player);
     this.turn = 2;
-  }
+  }*/
 
-  enemyTurn() {
+  /*enemyTurn() {
     this.drawCard(this.enemy);
     this.turn = 1;
-  }
+  }*/
 
   //This should take an argument; this.player, this.enemy; something to differentiate
   drawCard(foo) {
@@ -39,7 +57,7 @@ export default class MainScene extends Phaser.Scene {
 
 
 
-  update() {
+  /*update() {
     if (this.turn == 1) {
       this.playerTurn();
       if (this.playerMana < 10) {
@@ -51,5 +69,5 @@ export default class MainScene extends Phaser.Scene {
         this.enemyMana += 1;
       }
     }
-  }
+  }*/
 }
