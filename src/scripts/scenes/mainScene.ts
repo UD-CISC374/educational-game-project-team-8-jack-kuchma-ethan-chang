@@ -33,8 +33,11 @@ export default class MainScene extends Phaser.Scene {
 
   //This should take an argument; this.player, this.enemy; something to differentiate
   drawCard(foo) {
+    //should play the animation for drawing a card from deck
     foo.count += 1;
   }
+
+
 
   update() {
     if (this.turn == 1) {
