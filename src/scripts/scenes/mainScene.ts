@@ -25,6 +25,9 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
+    let self = this;
+
+
     this.background = this.add.image(0, 0, "grass");
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
@@ -42,6 +45,21 @@ export default class MainScene extends Phaser.Scene {
     this.zone5 = new Zone(this, 370, 250, 60, 80);
     this.zone6 = new Zone(this, 440, 250, 60, 80);
     this.zone7 = new Zone(this, 510, 250, 60, 80);
+
+    this.input.on('dragstart', function(pointer, gameObject){
+      gameObject.setTint(0xff69b4);
+      self.children.bringToTop(gameObject);
+    })
+
+    this.input.on('dragend',function(pointer,gameObject,dropped){
+      gameObject.setTint();
+      if (!dropped){
+        gameObject.x = gameObject.input.dragStartX;
+        gameObject.y = gameObject.input.dragStartY;
+      }
+    })
+
+
   }
 
   dealCards() {
@@ -67,6 +85,8 @@ export default class MainScene extends Phaser.Scene {
     this.input.off('pointerup',this.stopDrag,this);
 
   }
+
+
   /*playerTurn() {
     this.drawCard(this.player);
     this.turn = 2;
