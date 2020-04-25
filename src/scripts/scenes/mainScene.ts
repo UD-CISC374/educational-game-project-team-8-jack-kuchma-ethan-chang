@@ -25,6 +25,17 @@ export default class MainScene extends Phaser.Scene {
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
 
+  playerCard1: Card;
+  playerCard2: Card;
+  playerCard3: Card;
+  playerCard4: Card;
+  playerCard5: Card;
+  enemyCard1: Card;
+  enemyCard2: Card;
+  enemyCard3: Card;
+  enemyCard4: Card;
+  enemyCard5: Card;
+
   constructor() {
     super({ key: 'MainScene' });
   }
@@ -72,10 +83,20 @@ export default class MainScene extends Phaser.Scene {
   }
 
   dealCards() {
-    for (let i = 0; i < 5; i++) {
-      let playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
-      let enemyCard = new Card(this, 370 + (i*50), 40, 'card_placeholder');
-    }
+    //for (let i = 0; i < 5; i++) {
+      //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder').setInteractive();
+      //let enemyCard = new Card(this, 370 + (i*50), 40, 'card_placeholder');
+      this.enemyCard1 = new Card(this, 370 + (0), 40, 'card_placeholder').setInteractive();
+      this.enemyCard2 = new Card(this, 370 + (50), 40, 'card_placeholder').setInteractive();
+      this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder').setInteractive();
+      this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder').setInteractive();
+      this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder').setInteractive();
+    //}
   }
 
   startDrag(pointer, targets){
@@ -114,8 +135,8 @@ export default class MainScene extends Phaser.Scene {
 
 
 
-  /*update() {
-    if (this.turn == 1) {
+  update() {
+    /* if (this.turn == 1) {
       this.playerTurn();
       if (this.playerMana < 10) {
         this.playerMana += 1;
@@ -125,6 +146,16 @@ export default class MainScene extends Phaser.Scene {
       if (this.enemyMana < 10) {
         this.enemyMana += 1;
       }
-    }
-  }*/
+    } */
+    this.playerCard1.attack.x = this.playerCard1.x;
+    this.playerCard1.attack.y = this.playerCard1.y;
+    this.playerCard2.attack.x = this.playerCard2.x;
+    this.playerCard2.attack.y = this.playerCard2.y;
+    this.playerCard3.attack.x = this.playerCard3.x;
+    this.playerCard3.attack.y = this.playerCard3.y;
+    this.playerCard4.attack.x = this.playerCard4.x;
+    this.playerCard4.attack.y = this.playerCard4.y;
+    this.playerCard5.attack.x = this.playerCard5.x;
+    this.playerCard5.attack.y = this.playerCard5.y;
+  }
 }
