@@ -91,11 +91,11 @@ export default class MainScene extends Phaser.Scene {
       this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder').setInteractive();
       this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder').setInteractive();
       //let enemyCard = new Card(this, 370 + (i*50), 40, 'card_placeholder');
-      this.enemyCard1 = new Card(this, 370 + (0), 40, 'card_placeholder').setInteractive();
-      this.enemyCard2 = new Card(this, 370 + (50), 40, 'card_placeholder').setInteractive();
-      this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder').setInteractive();
-      this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder').setInteractive();
-      this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder').setInteractive();
+      this.enemyCard1 = new Card(this, 370 + (0), 40, 'card_placeholder');
+      this.enemyCard2 = new Card(this, 370 + (50), 40, 'card_placeholder');
+      this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder');
+      this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder');
+      this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder');
     //}
   }
 
@@ -157,5 +157,16 @@ export default class MainScene extends Phaser.Scene {
     this.playerCard4.attack.y = this.playerCard4.y;
     this.playerCard5.attack.x = this.playerCard5.x;
     this.playerCard5.attack.y = this.playerCard5.y;
+
+    this.enemyCard1.attack.x = this.enemyCard1.x;
+    this.enemyCard1.attack.y = this.enemyCard1.y;
+    this.enemyCard2.attack.x = this.enemyCard2.x;
+    this.enemyCard2.attack.y = this.enemyCard2.y;
+    this.enemyCard3.attack.x = this.enemyCard3.x;
+    this.enemyCard3.attack.y = this.enemyCard3.y;
+    this.enemyCard4.attack.x = this.enemyCard4.x;
+    this.enemyCard4.attack.y = this.enemyCard4.y;
+    this.enemyCard5.attack.x = this.enemyCard5.x;
+    this.enemyCard5.attack.y = this.enemyCard5.y;
   }
 }
