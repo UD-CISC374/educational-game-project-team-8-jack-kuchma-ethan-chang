@@ -17,8 +17,13 @@ export default class MainScene extends Phaser.Scene {
   zone7: Phaser.GameObjects.Zone;
 
   playerMana: number;
+  playerHealth: number = 30;
+  enemyHealth: number = 30
   enemyMana: number = 0;
   turn: number = 0;
+  explanation: GameObjects.Text;
+  player_castle_health: GameObjects.Text;
+  enemy_castle_health: GameObjects.Text;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -27,11 +32,15 @@ export default class MainScene extends Phaser.Scene {
   create() {
     let self = this;
 
-
     this.background = this.add.image(0, 0, "grass");
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
+    this.player_castle_health = this.add.text(320, 380, String(this.playerHealth),{fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
+
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
+    this.enemy_castle_health = this.add.text(320, 60, String(this.enemyHealth), {fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
+
+    this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
     //this.card = this.add.image(this.scale.width/2,40,"placeholder");
     //this.card.setInteractive();
     this.input.on('pointerdown',this.startDrag,this);
