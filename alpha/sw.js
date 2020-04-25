@@ -1,4 +1,4 @@
-importScripts("/educational-game-project-team-8-jack-kuchma-ethan-chang/alphaprecache-manifest.6519889234399baac76806ccaab0a557.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/educational-game-project-team-8-jack-kuchma-ethan-chang/alphaprecache-manifest.7aba8ee72b011f3bf9d387da735d4d05.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 /**
  * You should only modify this, if you know what you are doing.
