@@ -57,7 +57,7 @@ export default class MainScene extends Phaser.Scene {
     //this.card = this.add.image(this.scale.width/2,40,"placeholder");
     //this.card.setInteractive();
     this.input.on('pointerdown',this.startDrag,this);
-
+    
     this.dealCards();
 
     this.zone1 = new Zone(this, 90, 250, 60, 80);
@@ -82,23 +82,24 @@ export default class MainScene extends Phaser.Scene {
     })
 
     this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
+    
   }
 
   dealCards() {
     console.log("dealt cards");
     //for (let i = 0; i < 5; i++) {
       //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder').setInteractive();
+      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',1).setInteractive();
+      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder',2).setInteractive();
+      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder',3).setInteractive();
+      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder',4).setInteractive();
+      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',5).setInteractive();
       //let enemyCard = new Card(this, 370 + (i*50), 40, 'card_placeholder');
-      this.enemyCard1 = new Card(this, 370 + (0), 40, 'card_placeholder');
-      this.enemyCard2 = new Card(this, 370 + (50), 40, 'card_placeholder');
-      this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder');
-      this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder');
-      this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder');
+      this.enemyCard1 = new Card(this, 370 + (0), 40, 'card_placeholder',6);
+      this.enemyCard2 = new Card(this, 370 + (50), 40, 'card_placeholder',7);
+      this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder',8);
+      this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder',9);
+      this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder',10);
 
       this.pCardGroup = this.add.group({
         classType: Card,
