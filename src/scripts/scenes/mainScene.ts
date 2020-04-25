@@ -25,11 +25,13 @@ export default class MainScene extends Phaser.Scene {
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
 
+  pCardGroup: Phaser.GameObjects.Group;
   playerCard1: Card;
   playerCard2: Card;
   playerCard3: Card;
   playerCard4: Card;
   playerCard5: Card;
+  eCardGroup: Phaser.GameObjects.Group;
   enemyCard1: Card;
   enemyCard2: Card;
   enemyCard3: Card;
@@ -79,10 +81,11 @@ export default class MainScene extends Phaser.Scene {
       }
     })
 
-
+    this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
   }
 
   dealCards() {
+    console.log("dealt cards");
     //for (let i = 0; i < 5; i++) {
       //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
       this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder').setInteractive();
@@ -96,6 +99,12 @@ export default class MainScene extends Phaser.Scene {
       this.enemyCard3 = new Card(this, 370 + (100), 40, 'card_placeholder');
       this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder');
       this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder');
+
+      this.pCardGroup = this.add.group({
+        classType: Card,
+        maxSize: 15,
+        runChildUpdate: true
+      });
     //}
   }
 
@@ -114,6 +123,18 @@ export default class MainScene extends Phaser.Scene {
     this.input.off('pointermove',this.doDrag,this);
     this.input.off('pointerup',this.stopDrag,this);
 
+  }
+
+  react(playerCard, enemyCard) {
+    playerCard.molarity = playerCard.molarity - enemyCard.molarity;
+    if (playerCard.molarity <= 0) {
+      playerCard.destroy();
+    }
+    enemyCard.molarity = enemyCard.molarity - playerCard.molarity;
+    if (enemyCard.molarity <= 0) {
+      enemyCard.destroy();
+    }
+    console.log("reaction");
   }
 
 
@@ -147,26 +168,27 @@ export default class MainScene extends Phaser.Scene {
         this.enemyMana += 1;
       }
     } */
-    this.playerCard1.attack.x = this.playerCard1.x;
+
+    this.playerCard1.attack.x = this.playerCard1.x -15;
     this.playerCard1.attack.y = this.playerCard1.y;
-    this.playerCard2.attack.x = this.playerCard2.x;
+    this.playerCard2.attack.x = this.playerCard2.x -15;
     this.playerCard2.attack.y = this.playerCard2.y;
-    this.playerCard3.attack.x = this.playerCard3.x;
+    this.playerCard3.attack.x = this.playerCard3.x -15;
     this.playerCard3.attack.y = this.playerCard3.y;
-    this.playerCard4.attack.x = this.playerCard4.x;
+    this.playerCard4.attack.x = this.playerCard4.x -15;
     this.playerCard4.attack.y = this.playerCard4.y;
-    this.playerCard5.attack.x = this.playerCard5.x;
+    this.playerCard5.attack.x = this.playerCard5.x -15;
     this.playerCard5.attack.y = this.playerCard5.y;
 
-    this.enemyCard1.attack.x = this.enemyCard1.x;
+    this.enemyCard1.attack.x = this.enemyCard1.x -15;
     this.enemyCard1.attack.y = this.enemyCard1.y;
-    this.enemyCard2.attack.x = this.enemyCard2.x;
+    this.enemyCard2.attack.x = this.enemyCard2.x -15;
     this.enemyCard2.attack.y = this.enemyCard2.y;
-    this.enemyCard3.attack.x = this.enemyCard3.x;
+    this.enemyCard3.attack.x = this.enemyCard3.x -15;
     this.enemyCard3.attack.y = this.enemyCard3.y;
-    this.enemyCard4.attack.x = this.enemyCard4.x;
+    this.enemyCard4.attack.x = this.enemyCard4.x -15;
     this.enemyCard4.attack.y = this.enemyCard4.y;
-    this.enemyCard5.attack.x = this.enemyCard5.x;
+    this.enemyCard5.attack.x = this.enemyCard5.x -15;
     this.enemyCard5.attack.y = this.enemyCard5.y;
   }
 }

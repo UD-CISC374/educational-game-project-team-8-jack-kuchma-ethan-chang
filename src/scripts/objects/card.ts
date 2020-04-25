@@ -1,4 +1,4 @@
-export default class Card extends Phaser.GameObjects.Image {
+export default class Card extends Phaser.Physics.Arcade.Image {
     card_back_image: Phaser.GameObjects.Image;
     attack: Phaser.GameObjects.Text;
     molarity: number = 1;
@@ -11,7 +11,7 @@ export default class Card extends Phaser.GameObjects.Image {
         super(scene, x, y, card);
         scene.add.existing(this);
 
-        this.attack = scene.add.text(this.x, this.y, String(this.molarity), {font: "12px Arial", fill: "black"});
+        this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.molarity), {font: "10px Arial", fill: "black"});
         //var container = scene.add.container(this.x, this.y, [image, M]).setSize(25, 25);
         /*this.card_back_image = scene.add.image(x,y,card);
         this.add(this.card_back_image);
