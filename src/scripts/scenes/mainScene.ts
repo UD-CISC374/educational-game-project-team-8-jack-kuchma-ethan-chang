@@ -8,14 +8,15 @@ export default class MainScene extends Phaser.Scene {
   enemy_castle: Phaser.GameObjects.Image;
   card:Phaser.GameObjects.Image;
 
-  zone1: Phaser.GameObjects.Zone;
+  /* zone1: Phaser.GameObjects.Zone;
   zone2: Phaser.GameObjects.Zone;
   zone3: Phaser.GameObjects.Zone;
   zone4: Phaser.GameObjects.Zone;
   zone5: Phaser.GameObjects.Zone;
   zone6: Phaser.GameObjects.Zone;
   zone7: Phaser.GameObjects.Zone;
-  zoneGroup: Phaser.GameObjects.Group;
+  zoneGroup: Phaser.GameObjects.Group; */
+  zone: Phaser.GameObjects.Zone;
 
   playerMana: number;
   playerHealth: number = 30;
@@ -53,6 +54,8 @@ export default class MainScene extends Phaser.Scene {
     this.enemy_castle_health = this.add.text(320, 60, String(this.enemyHealth), {fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
 
     this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
+    
+    this.zone = new Zone(this, 300, 250, 420, 80);
     //this.card = this.add.image(this.scale.width/2,40,"placeholder");
     //this.card.setInteractive();
     
@@ -61,11 +64,17 @@ export default class MainScene extends Phaser.Scene {
       gameObject.x = dragX;
       gameObject.y = dragY;
     }) */
-    this.input.on('drop', this.drop, this);
+    this.input.on('drop', function(pointer, gameObject, target) {
+      target.data.values.cards++;
+      gameObject.x = (target.x - 300) + (target.data.values.cards * 60);
+      gameObject.y = target.y;
+      gameObject.disableInteractive();
+    });
     
     this.dealCards();
 
-    this.zone1 = new Zone(this, 90, 250, 60, 80);
+    
+/*  this.zone1 = new Zone(this, 90, 250, 60, 80);
     this.zone2 = new Zone(this, 160, 250, 60, 80);
     this.zone3 = new Zone(this, 230, 250, 60, 80);
     this.zone4 = new Zone(this, 300, 250, 60, 80);
@@ -76,7 +85,7 @@ export default class MainScene extends Phaser.Scene {
       classType: Zone,
       maxSize: 7,
       runChildUpdate: true
-    });
+    }); */
     
     this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
     
@@ -104,32 +113,6 @@ export default class MainScene extends Phaser.Scene {
         runChildUpdate: true
       }); */
     //}
-  }
-
-/*   startDrag(pointer, targets){
-    this.input.off('pointerdown',this.startDrag,this);
-    this.card = targets[0];
-    this.card.setTint(0xff69b4);
-    this.input.on('pointermove',this.doDrag,this);
-    this.input.on('pointerup',this.stopDrag,this);
-  }
-  doDrag(pointer){
-    this.card.x = pointer.x;
-    this.card.y = pointer.y;
-  }
-  stopDrag(){
-    this.card.setTint();
-    this.input.on('pointerdown',this.startDrag,this);
-    this.input.off('pointermove',this.doDrag,this);
-    this.input.off('pointerup',this.stopDrag,this);
-    this.input.on('drop', this.drop, this);
-  } */
-
-  drop(pointer, gameObject, zoneGroup) {
-    this.zone1.data.values.card++;
-    this.card.x = this.zone1.x;
-    this.card.y = this.zone1.y;
-    this.card.disableInteractive();
   }
 
   react(playerCard, enemyCard) {
