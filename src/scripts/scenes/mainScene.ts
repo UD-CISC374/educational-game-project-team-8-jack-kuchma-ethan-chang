@@ -56,7 +56,11 @@ export default class MainScene extends Phaser.Scene {
     //this.card = this.add.image(this.scale.width/2,40,"placeholder");
     //this.card.setInteractive();
     
-    this.input.on('pointerdown',this.startDrag,this);
+    //this.input.on('pointerdown',this.startDrag,this);
+   /*  this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+      gameObject.x = dragX;
+      gameObject.y = dragY;
+    }) */
     this.input.on('drop', this.drop, this);
     
     this.dealCards();
@@ -102,7 +106,7 @@ export default class MainScene extends Phaser.Scene {
     //}
   }
 
-  startDrag(pointer, targets){
+/*   startDrag(pointer, targets){
     this.input.off('pointerdown',this.startDrag,this);
     this.card = targets[0];
     this.card.setTint(0xff69b4);
@@ -119,7 +123,7 @@ export default class MainScene extends Phaser.Scene {
     this.input.off('pointermove',this.doDrag,this);
     this.input.off('pointerup',this.stopDrag,this);
     this.input.on('drop', this.drop, this);
-  }
+  } */
 
   drop(pointer, gameObject, zoneGroup) {
     this.zone1.data.values.card++;

@@ -8,6 +8,21 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         to this card object.
         */
         super(scene, x, y, card);
+        this.setInteractive();
+        scene.input.setDraggable(this);
+        scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+            gameObject.setTint(0xff69b4);
+            //scene.children.bringToTop(gameObject);
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+        })
+        scene.input.on('dragend', function(pointer, gameObject) {
+            gameObject.setTint();
+            if (!dropped) {
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
+        })
         scene.add.existing(this);
 
         this.attack = scene.add.text(this.x, this.y, "moles: " + String(moles), {font: "10px Arial", fill: "black"});
