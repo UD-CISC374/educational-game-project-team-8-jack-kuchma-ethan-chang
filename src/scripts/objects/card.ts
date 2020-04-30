@@ -1,4 +1,4 @@
-export default class Card extends Phaser.Physics.Arcade.Image {
+export default class ECard extends Phaser.Physics.Arcade.Image {
     card_back_image: Phaser.GameObjects.Image;
     attack: Phaser.GameObjects.Text;
     moles: number;
@@ -24,6 +24,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             }
         })
         scene.input.on('drop', function(pointer, gameObject, target) {
+            console.log('dropped in zone');
             target.data.values.cards++;
             gameObject.x = (target.x - 300) + (target.data.values.cards * 60);
             gameObject.y = target.y;
