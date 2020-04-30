@@ -2,6 +2,7 @@ export default class Zone extends Phaser.GameObjects.Zone {
     constructor(scene: Phaser.Scene, x: number, y: number, w: number, h: number) {
         super(scene, x, y, w, h);
         this.setData({ cards: 0 });
+        //this.setInteractive();
         scene.add.existing(this);
 
         let dropZoneOutline = scene.add.graphics();

@@ -15,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
   zone5: Phaser.GameObjects.Zone;
   zone6: Phaser.GameObjects.Zone;
   zone7: Phaser.GameObjects.Zone;
+  zoneGroup: Phaser.GameObjects.Group;
 
   playerMana: number;
   playerHealth: number = 30;
@@ -43,8 +44,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    let self = this;
-
     this.background = this.add.image(0, 0, "grass");
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
@@ -56,7 +55,9 @@ export default class MainScene extends Phaser.Scene {
     this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
     //this.card = this.add.image(this.scale.width/2,40,"placeholder");
     //this.card.setInteractive();
+    
     this.input.on('pointerdown',this.startDrag,this);
+    this.input.on('drop', this.drop, this);
     
     this.dealCards();
 
@@ -67,21 +68,11 @@ export default class MainScene extends Phaser.Scene {
     this.zone5 = new Zone(this, 370, 250, 60, 80);
     this.zone6 = new Zone(this, 440, 250, 60, 80);
     this.zone7 = new Zone(this, 510, 250, 60, 80);
-
-    this.input.on('dragstart', function(pointer, gameObject){
-      gameObject.setTint(0xff69b4);
-      console.log('tint');
-      gameObject.self.children.bringToTop(gameObject);
-    }, this);
-
-    this.input.on('dragend',function(pointer,gameObject,dropped){
-      gameObject.setTint();
-      if (!dropped){
-        gameObject.x = gameObject.input.dragStartX;
-        gameObject.y = gameObject.input.dragStartY;
-      }
-    }, this);
-
+    this.zoneGroup = this.add.group({
+      classType: Zone,
+      maxSize: 7,
+      runChildUpdate: true
+    });
     
     this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
     
@@ -127,7 +118,14 @@ export default class MainScene extends Phaser.Scene {
     this.input.on('pointerdown',this.startDrag,this);
     this.input.off('pointermove',this.doDrag,this);
     this.input.off('pointerup',this.stopDrag,this);
+    this.input.on('drop', this.drop, this);
+  }
 
+  drop(pointer, gameObject, zoneGroup) {
+    this.zone1.data.values.card++;
+    this.card.x = this.zone1.x;
+    this.card.y = this.zone1.y;
+    this.card.disableInteractive();
   }
 
   react(playerCard, enemyCard) {
