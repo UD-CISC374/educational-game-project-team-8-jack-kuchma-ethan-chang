@@ -70,8 +70,9 @@ export default class MainScene extends Phaser.Scene {
 
     this.input.on('dragstart', function(pointer, gameObject){
       gameObject.setTint(0xff69b4);
-      self.children.bringToTop(gameObject);
-    })
+      console.log('tint');
+      gameObject.self.children.bringToTop(gameObject);
+    }, this);
 
     this.input.on('dragend',function(pointer,gameObject,dropped){
       gameObject.setTint();
@@ -79,8 +80,9 @@ export default class MainScene extends Phaser.Scene {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
       }
-    })
+    }, this);
 
+    
     this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
   }
 
@@ -100,17 +102,18 @@ export default class MainScene extends Phaser.Scene {
       this.enemyCard4 = new Card(this, 370 + (150), 40, 'card_placeholder');
       this.enemyCard5 = new Card(this, 370 + (200), 40, 'card_placeholder');
 
-      this.pCardGroup = this.add.group({
+      /* this.pCardGroup = this.add.group({
         classType: Card,
         maxSize: 15,
         runChildUpdate: true
-      });
+      }); */
     //}
   }
 
   startDrag(pointer, targets){
     this.input.off('pointerdown',this.startDrag,this);
     this.card = targets[0];
+    this.card.setTint(0xff69b4);
     this.input.on('pointermove',this.doDrag,this);
     this.input.on('pointerup',this.stopDrag,this);
   }
@@ -119,6 +122,7 @@ export default class MainScene extends Phaser.Scene {
     this.card.y = pointer.y;
   }
   stopDrag(){
+    this.card.setTint();
     this.input.on('pointerdown',this.startDrag,this);
     this.input.off('pointermove',this.doDrag,this);
     this.input.off('pointerup',this.stopDrag,this);
