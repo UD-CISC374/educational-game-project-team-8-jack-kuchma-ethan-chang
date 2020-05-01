@@ -5,6 +5,7 @@ export default class Zone extends Phaser.GameObjects.Zone {
         //this.setInteractive();
         scene.add.existing(this);
 
+        this.setRectangleDropZone(w,h);
         let dropZoneOutline = scene.add.graphics();
         dropZoneOutline.lineStyle(4, 0xff69b4);
         dropZoneOutline.strokeRect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);

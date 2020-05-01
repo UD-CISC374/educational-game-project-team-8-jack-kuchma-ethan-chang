@@ -65,12 +65,12 @@ export default class MainScene extends Phaser.Scene {
       gameObject.x = dragX;
       gameObject.y = dragY;
     }) */
-    this.input.on('drop', function(pointer, gameObject, target) {
-      globalThis.zone.data.values.cards++;
-      gameObject.x = (globalThis.zone.x - 300) + (globalThis.zone.data.values.cards * 60);
-      gameObject.y = globalThis.zone.y;
-      gameObject.disableInteractive();
-    });
+    // this.input.on('drop', function(pointer, gameObject, dropZoneOutline) {
+    //   dropZoneOutline.data.values.card++;
+    //   gameObject.x = (dropZoneOutline.x - 300) + (dropZoneOutline.data.values.cards * 60);
+    //   gameObject.y = dropZoneOutline.y;
+    //   gameObject.disableInteractive();
+    // });
     
     this.dealCards();
 

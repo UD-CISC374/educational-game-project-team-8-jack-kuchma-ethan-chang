@@ -19,16 +19,17 @@ export default class ECard extends Phaser.Physics.Arcade.Image {
         scene.input.on('dragend', function(pointer, gameObject, dropped) {
             gameObject.setTint();
             if (!dropped) {
+                console.log()
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
         })
-        scene.input.on('drop', function(pointer, gameObject, target) {
+        this.on('drop', (pointer, dropZoneOutline) => {
             console.log('dropped in zone');
-            target.data.values.cards++;
-            gameObject.x = (target.x - 300) + (target.data.values.cards * 60);
-            gameObject.y = target.y;
-            gameObject.disableInteractive();
+            dropZoneOutline.data.values.cards++;
+            this.x = (dropZoneOutline.x - 300) + (dropZoneOutline.data.values.cards * 60);
+            this.y = dropZoneOutline.y;
+            this.disableInteractive();
         })
         scene.add.existing(this);
 
