@@ -88,7 +88,7 @@ export default class MainScene extends Phaser.Scene {
       runChildUpdate: true
     }); */
     
-    //this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
+    //this.physics.add.overlap(this.pCardGroup, this.eCardGroup, this.react, undefined, this);
     
   }
 
@@ -111,11 +111,16 @@ export default class MainScene extends Phaser.Scene {
         classType: Card,
         maxSize: 15,
         runChildUpdate: true
+      });
+      this.eCardGroup = this.add.group({
+        classType: ECard,
+        maxSize: 15,
+        runChildUpdate: true
       }); */
     //}
   }
 
-  react(playerCard, enemyCard) {
+ /*  react(playerCard, enemyCard) {
     playerCard.moles = playerCard.moles - enemyCard.moles;
     if (playerCard.moles <= 0) {
       playerCard.destroy();
@@ -126,7 +131,7 @@ export default class MainScene extends Phaser.Scene {
     }
     console.log("reaction");
   }
-
+ */
 
   /*playerTurn() {
     this.drawCard(this.player);

@@ -6,6 +6,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
     value: number; //used in comparing if an acid type card (value = 1) is attacking a base (value = 0)
     startX: number;
     startY: number;
+    onBoard: boolean = false;
 
     constructor(scene: Phaser.Scene, x: number, y: number, card: string, moles: number) {
         /* I imagine some type of hash table like thing where the key('acid','base','spell') is passed 
@@ -14,31 +15,49 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         super(scene, x, y, card);
         this.setInteractive();
         scene.input.setDraggable(this);
+
         scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.setTint(0xff69b4);
             //scene.children.bringToTop(gameObject);
             gameObject.x = dragX;
             gameObject.y = dragY;
         })
+
         scene.input.on('dragend', function(pointer, gameObject, dropped) {
             gameObject.setTint();
             if (!dropped) {
-                console.log()
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
                 globalThis.startX = gameObject.input.dragStartX;
                 globalThis.startY = gameObject.input.dragStartY;
             }
         })
+
         this.on('drop', (pointer, dropZoneOutline) => {
             console.log('dropped in zone');
             if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
-                    dropZoneOutline.data.values.cards++;
+                dropZoneOutline.data.values.cards++;
             }
             this.x = (dropZoneOutline.x - 220) + (dropZoneOutline.data.values.cards * 55);
             this.y = dropZoneOutline.y;
+            this.onBoard = true;
             //scene.input.setDraggable(this, false);
+        })
+
+        this.on('dragleave', (pointer, enemyCard) => {
+            console.log('reacted');
+            if (this.onBoard && enemyCard.onBoard && (this.value == enemyCard.value)) {
+                console.log('actually reacted');
+                this.moles = this.moles - enemyCard.moles;
+                if (this.moles <= 0) {
+                    this.destroy();
+                }
+                enemyCard.moles = enemyCard.moles - this.moles;
+                if (enemyCard.moles <= 0) {
+                   enemyCard.destroy();
+                }
+            }
         })
         scene.add.existing(this);
 
