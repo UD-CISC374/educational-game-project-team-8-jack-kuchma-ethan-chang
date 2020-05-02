@@ -1,9 +1,11 @@
-export default class ECard extends Phaser.Physics.Arcade.Image {
+export default class Card extends Phaser.Physics.Arcade.Image {
     card_back_image: Phaser.GameObjects.Image;
     attack: Phaser.GameObjects.Text;
     moles: number;
     cardType: Phaser.GameObjects.Text;
     value: number; //used in comparing if an acid type card (value = 1) is attacking a base (value = 0)
+    startX: number;
+    startY: number;
 
     constructor(scene: Phaser.Scene, x: number, y: number, card: string, moles: number) {
         /* I imagine some type of hash table like thing where the key('acid','base','spell') is passed 
@@ -24,14 +26,15 @@ export default class ECard extends Phaser.Physics.Arcade.Image {
                 console.log()
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
+                globalThis.startX = gameObject.input.dragStartX;
+                globalThis.startY = gameObject.input.dragStartY;
             }
         })
         this.on('drop', (pointer, dropZoneOutline) => {
             console.log('dropped in zone');
-            if (!(this.input.dragStartX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.input.dragStartX < (dropZoneOutline.x + dropZoneOutline.width/2))) {
-                if (!(this.input.dragStartY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.input.dragStartY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
+            if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
+                && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
                     dropZoneOutline.data.values.cards++;
-                }
             }
             this.x = (dropZoneOutline.x - 220) + (dropZoneOutline.data.values.cards * 55);
             this.y = dropZoneOutline.y;
