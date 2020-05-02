@@ -35,11 +35,11 @@ export default class MainScene extends Phaser.Scene {
   playerCard4: Card;
   playerCard5: Card;
   eCardGroup: Phaser.GameObjects.Group;
-  enemyCard1: Card;
-  enemyCard2: Card;
-  enemyCard3: Card;
-  enemyCard4: Card;
-  enemyCard5: Card;
+  enemyCard1: ECard;
+  enemyCard2: ECard;
+  enemyCard3: ECard;
+  enemyCard4: ECard;
+  enemyCard5: ECard;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -88,7 +88,7 @@ export default class MainScene extends Phaser.Scene {
       runChildUpdate: true
     }); */
     
-    this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
+    //this.physics.add.overlap(this.pCardGroup, this.pCardGroup, this.react, undefined, this);
     
   }
 
@@ -116,12 +116,12 @@ export default class MainScene extends Phaser.Scene {
   }
 
   react(playerCard, enemyCard) {
-    playerCard.molarity = playerCard.molarity - enemyCard.molarity;
-    if (playerCard.molarity <= 0) {
+    playerCard.moles = playerCard.moles - enemyCard.moles;
+    if (playerCard.moles <= 0) {
       playerCard.destroy();
     }
-    enemyCard.molarity = enemyCard.molarity - playerCard.molarity;
-    if (enemyCard.molarity <= 0) {
+    enemyCard.moles = enemyCard.moles - playerCard.moles;
+    if (enemyCard.moles <= 0) {
       enemyCard.destroy();
     }
     console.log("reaction");
@@ -159,26 +159,48 @@ export default class MainScene extends Phaser.Scene {
       }
     } */
 
-    this.playerCard1.attack.x = this.playerCard1.x -15;
+    this.playerCard1.attack.x = this.playerCard1.x - 20;
     this.playerCard1.attack.y = this.playerCard1.y;
-    this.playerCard2.attack.x = this.playerCard2.x -15;
+    this.playerCard2.attack.x = this.playerCard2.x - 20;
     this.playerCard2.attack.y = this.playerCard2.y;
-    this.playerCard3.attack.x = this.playerCard3.x -15;
+    this.playerCard3.attack.x = this.playerCard3.x - 20;
     this.playerCard3.attack.y = this.playerCard3.y;
-    this.playerCard4.attack.x = this.playerCard4.x -15;
+    this.playerCard4.attack.x = this.playerCard4.x - 20;
     this.playerCard4.attack.y = this.playerCard4.y;
-    this.playerCard5.attack.x = this.playerCard5.x -15;
+    this.playerCard5.attack.x = this.playerCard5.x - 20;
     this.playerCard5.attack.y = this.playerCard5.y;
 
-    this.enemyCard1.attack.x = this.enemyCard1.x -15;
+    this.playerCard1.cardType.x = this.playerCard1.x - 20;
+    this.playerCard1.cardType.y = this.playerCard1.y - 10;
+    this.playerCard2.cardType.x = this.playerCard2.x - 20;
+    this.playerCard2.cardType.y = this.playerCard2.y - 10;
+    this.playerCard3.cardType.x = this.playerCard3.x - 20;
+    this.playerCard3.cardType.y = this.playerCard3.y - 10;
+    this.playerCard4.cardType.x = this.playerCard4.x - 20;
+    this.playerCard4.cardType.y = this.playerCard4.y - 10;
+    this.playerCard5.cardType.x = this.playerCard5.x - 20;
+    this.playerCard5.cardType.y = this.playerCard5.y - 10;
+
+    this.enemyCard1.attack.x = this.enemyCard1.x - 20;
     this.enemyCard1.attack.y = this.enemyCard1.y;
-    this.enemyCard2.attack.x = this.enemyCard2.x -15;
+    this.enemyCard2.attack.x = this.enemyCard2.x - 20;
     this.enemyCard2.attack.y = this.enemyCard2.y;
-    this.enemyCard3.attack.x = this.enemyCard3.x -15;
+    this.enemyCard3.attack.x = this.enemyCard3.x - 20;
     this.enemyCard3.attack.y = this.enemyCard3.y;
-    this.enemyCard4.attack.x = this.enemyCard4.x -15;
+    this.enemyCard4.attack.x = this.enemyCard4.x - 20;
     this.enemyCard4.attack.y = this.enemyCard4.y;
-    this.enemyCard5.attack.x = this.enemyCard5.x -15;
+    this.enemyCard5.attack.x = this.enemyCard5.x - 20;
     this.enemyCard5.attack.y = this.enemyCard5.y;
+
+    this.enemyCard1.cardType.x = this.enemyCard1.x - 20
+    this.enemyCard1.cardType.y = this.enemyCard1.y - 10;
+    this.enemyCard2.cardType.x = this.enemyCard2.x - 20
+    this.enemyCard2.cardType.y = this.enemyCard2.y - 10;
+    this.enemyCard3.cardType.x = this.enemyCard3.x - 20
+    this.enemyCard3.cardType.y = this.enemyCard3.y - 10;
+    this.enemyCard4.cardType.x = this.enemyCard4.x - 20
+    this.enemyCard4.cardType.y = this.enemyCard4.y - 10;
+    this.enemyCard5.cardType.x = this.enemyCard5.x - 20
+    this.enemyCard5.cardType.y = this.enemyCard5.y - 10;
   }
 }
