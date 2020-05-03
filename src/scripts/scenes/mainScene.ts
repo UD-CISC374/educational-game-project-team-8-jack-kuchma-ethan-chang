@@ -41,6 +41,11 @@ export default class MainScene extends Phaser.Scene {
   enemyCard4: ECard;
   enemyCard5: ECard;
 
+  tempPCard: Card;
+  //tempPCardMoles: number;
+  tempECard: ECard;
+  //tempECardMoles: number;
+
   constructor() {
     super({ key: 'MainScene' });
   }
@@ -57,8 +62,6 @@ export default class MainScene extends Phaser.Scene {
     this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
-    //this.card = this.add.image(this.scale.width/2,40,"placeholder");
-    //this.card.setInteractive();
     
     //this.input.on('pointerdown',this.startDrag,this);
    /*  this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
@@ -74,6 +77,35 @@ export default class MainScene extends Phaser.Scene {
     
     this.dealCards();
 
+    this.input.on('gameobjectdown', function(this:any, pointer, gameObject) {
+      console.log('gameobjectdown');
+      if (gameObject instanceof Card) {
+        console.log('this card is a PCard');
+        //globalThis.tempPCard.setTint();
+        this.tempPCard = gameObject;
+        this.tempPCard.setTint(0xff69b4);
+      } else if (gameObject instanceof ECard) {
+        console.log('this card is a ECard');
+        //globalThis.tempECard.setTint();
+        this.tempECard = gameObject;
+        this.tempECard.setTint(0xff69b4);
+        console.log(this.tempPCard.moles);
+        this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
+        console.log(this.tempPCard.moles);
+        
+        if (this.tempPCard.moles <= 0) {
+          console.log('PCard destroyed');
+          this.tempPCard.destroy();
+        }
+        this.tempECard.moles = this.tempECard.moles - this.tempPCard.moles;
+        if (this.tempECard.moles <= 0) {
+          console.log('ECard destroyed');
+          this.tempECard.destroy();
+        }
+        this.tempPCard;
+        this.tempECard;
+      }
+    });
     
 /*  this.zone1 = new Zone(this, 90, 250, 60, 80);
     this.zone2 = new Zone(this, 160, 250, 60, 80);
@@ -120,18 +152,20 @@ export default class MainScene extends Phaser.Scene {
     //}
   }
 
- /*  react(playerCard, enemyCard) {
-    playerCard.moles = playerCard.moles - enemyCard.moles;
-    if (playerCard.moles <= 0) {
-      playerCard.destroy();
+  /* react() {
+    this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
+    if (this.tempPCard.moles <= 0) {
+      this.tempPCard.destroy();
     }
-    enemyCard.moles = enemyCard.moles - playerCard.moles;
-    if (enemyCard.moles <= 0) {
-      enemyCard.destroy();
+    this.tempECard.moles = this.tempECard.moles - this.tempPCard.moles;
+    if (this.tempECard.moles <= 0) {
+      this.tempECard.destroy();
     }
+    this.tempPCard;
+    this.tempECard;
     console.log("reaction");
-  }
- */
+  } */
+
 
   /*playerTurn() {
     this.drawCard(this.player);
