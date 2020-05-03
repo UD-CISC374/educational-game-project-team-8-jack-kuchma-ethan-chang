@@ -9,14 +9,6 @@ export default class MainScene extends Phaser.Scene {
   enemy_castle: Phaser.GameObjects.Image;
   card:Phaser.GameObjects.Image;
 
-  /* zone1: Phaser.GameObjects.Zone;
-  zone2: Phaser.GameObjects.Zone;
-  zone3: Phaser.GameObjects.Zone;
-  zone4: Phaser.GameObjects.Zone;
-  zone5: Phaser.GameObjects.Zone;
-  zone6: Phaser.GameObjects.Zone;
-  zone7: Phaser.GameObjects.Zone;
-  zoneGroup: Phaser.GameObjects.Group; */
   zone: Phaser.GameObjects.Zone;
 
   playerMana: number;
@@ -42,9 +34,7 @@ export default class MainScene extends Phaser.Scene {
   enemyCard5: ECard;
 
   tempPCard: Card;
-  //tempPCardMoles: number;
   tempECard: ECard;
-  //tempECardMoles: number;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -63,30 +53,16 @@ export default class MainScene extends Phaser.Scene {
     
     this.zone = new Zone(this, 300, 250, 420, 80);
     
-    //this.input.on('pointerdown',this.startDrag,this);
-   /*  this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
-      gameObject.x = dragX;
-      gameObject.y = dragY;
-    }) */
-    // this.input.on('drop', function(pointer, gameObject, dropZoneOutline) {
-    //   dropZoneOutline.data.values.card++;
-    //   gameObject.x = (dropZoneOutline.x - 300) + (dropZoneOutline.data.values.cards * 60);
-    //   gameObject.y = dropZoneOutline.y;
-    //   gameObject.disableInteractive();
-    // });
-    
     this.dealCards();
 
     this.input.on('gameobjectdown', function(this:any, pointer, gameObject) {
       console.log('gameobjectdown');
       if (gameObject instanceof Card) {
         console.log('this card is a PCard');
-        //globalThis.tempPCard.setTint();
         this.tempPCard = gameObject;
         this.tempPCard.setTint(0xff69b4);
-      } else if (gameObject instanceof ECard) {
+      } else if (gameObject instanceof ECard && this.tempPCard.value != gameObject.value) { // Checks to see if ur attacking an opposite type card
         console.log('this card is a ECard');
-        //globalThis.tempECard.setTint();
         this.tempECard = gameObject;
         this.tempECard.setTint(0xff69b4);
         console.log(this.tempPCard.moles);
@@ -98,13 +74,14 @@ export default class MainScene extends Phaser.Scene {
         console.log(this.tempECard.moles);
         if (this.tempPCard.moles <= 0) {
           console.log('PCard destroyed');
+          this.tempPCard.moles = 0;
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
           this.tempPCard.destroy();
+          this.zone.data.values.cards--;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
           this.tempECard.setTint();
         }
-        
         if (this.tempECard.moles <= 0) {
           console.log('ECard destroyed');
           this.tempECard.attack.destroy();
@@ -114,25 +91,12 @@ export default class MainScene extends Phaser.Scene {
             this.tempPCard.attack.setText('moles: ' + String(this.tempPCard.moles));
             this.tempPCard.setTint();
           }
+
+          //Deal damage to enemy castle based on excess moles
+          this.enemy_castle_health.setText(String(this.enemyHealth - this.tempPCard.moles));
         }
       }
-    });
-    
-/*  this.zone1 = new Zone(this, 90, 250, 60, 80);
-    this.zone2 = new Zone(this, 160, 250, 60, 80);
-    this.zone3 = new Zone(this, 230, 250, 60, 80);
-    this.zone4 = new Zone(this, 300, 250, 60, 80);
-    this.zone5 = new Zone(this, 370, 250, 60, 80);
-    this.zone6 = new Zone(this, 440, 250, 60, 80);
-    this.zone7 = new Zone(this, 510, 250, 60, 80);
-    this.zoneGroup = this.add.group({
-      classType: Zone,
-      maxSize: 7,
-      runChildUpdate: true
-    }); */
-    
-    //this.physics.add.overlap(this.pCardGroup, this.eCardGroup, this.react, undefined, this);
-    
+    });    
   }
 
   dealCards() {

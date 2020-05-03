@@ -45,21 +45,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             this.onBoard = true;
             scene.input.setDraggable(this, false);
         })
-
-        /* this.on('dragleave', (pointer, enemyCard) => {
-            console.log('reacted');
-            if (this.onBoard && enemyCard.onBoard && (this.value == enemyCard.value)) {
-                console.log('actually reacted');
-                this.moles = this.moles - enemyCard.moles;
-                if (this.moles <= 0) {
-                    this.destroy();
-                }
-                enemyCard.moles = enemyCard.moles - this.moles;
-                if (enemyCard.moles <= 0) {
-                   enemyCard.destroy();
-                }
-            }
-        }) */
+        
         scene.add.existing(this);
 
         x = Math.random();
