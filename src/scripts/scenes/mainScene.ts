@@ -92,18 +92,23 @@ export default class MainScene extends Phaser.Scene {
         console.log(this.tempPCard.moles);
         this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
         console.log(this.tempPCard.moles);
-        
+        this.tempECard.moles = this.tempECard.moles - this.tempPCard.moles;
         if (this.tempPCard.moles <= 0) {
           console.log('PCard destroyed');
+          this.tempPCard.attack.destroy();
+          this.tempPCard.cardType.destroy();
+          // this.tempECard.attack.destroy();
           this.tempPCard.destroy();
+          this.tempECard.attack = this.setText(String(this.tempECard.moles));
         }
-        this.tempECard.moles = this.tempECard.moles - this.tempPCard.moles;
+        
         if (this.tempECard.moles <= 0) {
           console.log('ECard destroyed');
+          //this.tempPCard.attack.destroy();
+          this.tempECard.attack.destroy();
+          this.tempECard.cardType.destroy();
           this.tempECard.destroy();
         }
-        this.tempPCard;
-        this.tempECard;
       }
     });
     
