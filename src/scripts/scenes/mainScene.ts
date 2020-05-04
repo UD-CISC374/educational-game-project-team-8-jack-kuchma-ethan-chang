@@ -77,6 +77,8 @@ export default class MainScene extends Phaser.Scene {
           this.tempPCard.moles = 0;
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
+          let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
+          this.realign('p', destroyedX, destroyedY, -55);
           this.tempPCard.destroy();
           this.zone.data.values.cards--;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
@@ -101,6 +103,16 @@ export default class MainScene extends Phaser.Scene {
 
   dealCards() {
     console.log("dealt cards");
+    this.pCardGroup = this.add.group({
+        classType: Card,
+        maxSize: 17,
+        runChildUpdate: true
+      });
+      this.eCardGroup = this.add.group({
+        classType: ECard,
+        maxSize: 17,
+        runChildUpdate: true
+      });
     //for (let i = 0; i < 5; i++) {
       //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
       this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',1)
@@ -113,18 +125,34 @@ export default class MainScene extends Phaser.Scene {
       this.enemyCard3 = new ECard(this, 370 + (100), 40, 'card_placeholder',8);
       this.enemyCard4 = new ECard(this, 370 + (150), 40, 'card_placeholder',9);
       this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',10);
+      //}
+  }
 
-      /* this.pCardGroup = this.add.group({
-        classType: Card,
-        maxSize: 15,
-        runChildUpdate: true
+  /* realign(key, x, y, shift) {
+    if (key === 'p') {
+      var children = this.pCardGroup.getChildren();
+      for (let i of children) {
+        if (i.onBoard && i.x > x && i.y == y) {
+          i.x += shift;
+        }
+      }
+    } else if (key === 'e') {
+      var children = this.eCardGroup.getChildren();
+      for (let j of children) {
+        if (j.onBoard && j.x > x, && j.y == y) {
+          j.y += shift;
+        }
+      }
+    }
+  } */
+  realign(key, x, y, shift) {
+    if (key === 'p') {
+      this.pCardGroup.children.each(function(i) {
+        if (i.onBoard) {
+
+        }
       });
-      this.eCardGroup = this.add.group({
-        classType: ECard,
-        maxSize: 15,
-        runChildUpdate: true
-      }); */
-    //}
+    }
   }
 
   /* react() {
