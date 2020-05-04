@@ -8,7 +8,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
     startY: number;
     onBoard: boolean = false;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, card: string, mol: number) {
+    constructor(scene, x: number, y: number, card: string, mol: number) {
         /* I imagine some type of hash table like thing where the key('acid','base','spell') is passed 
         to this card object.
         */
@@ -16,6 +16,8 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         this.moles = mol
         this.setInteractive();
         scene.input.setDraggable(this);
+        //scene.pCardGroup.add(this);
+        // scene.pCardGroup.push(this);
 
         scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.setTint(0xff69b4);
@@ -45,7 +47,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             this.onBoard = true;
             scene.input.setDraggable(this, false);
         })
-        
+
         scene.add.existing(this);
 
         x = Math.random();

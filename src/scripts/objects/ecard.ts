@@ -6,13 +6,14 @@ export default class ECard extends Phaser.Physics.Arcade.Image {
     value: number; //used in comparing if an acid type card (value = 1) is attacking a base (value = 0)
     onBoard: boolean = true;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, card: string, mol: number) {
+    constructor(scene, x: number, y: number, card: string, mol: number) {
         /* I imagine some type of hash table like thing where the key('acid','base','spell') is passed 
         to this card object.
         */
         super(scene, x, y, card);
         this.moles = mol;
         this.setInteractive();
+        scene.eCardGroup.add(this);
         scene.add.existing(this);
 
         x = Math.random();

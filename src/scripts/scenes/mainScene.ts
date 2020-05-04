@@ -20,7 +20,7 @@ export default class MainScene extends Phaser.Scene {
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
 
-  pCardGroup: Phaser.GameObjects.Group;
+  pCardGroup: Array<Card>;
   playerCard1: Card;
   playerCard2: Card;
   playerCard3: Card;
@@ -52,10 +52,21 @@ export default class MainScene extends Phaser.Scene {
     this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
+
+    /* this.pCardGroup = this.add.group({
+      classType: Card,
+      maxSize: 17,
+      runChildUpdate: true
+    }); */
+    this.eCardGroup = this.add.group({
+      classType: ECard,
+      maxSize: 17,
+      runChildUpdate: true
+    });
     
     this.dealCards();
 
-    this.input.on('gameobjectdown', function(this:any, pointer, gameObject) {
+    this.input.on('gameobjectdown', (pointer, gameObject) => {
       console.log('gameobjectdown');
       if (gameObject instanceof Card) {
         console.log('this card is a PCard');
@@ -65,12 +76,12 @@ export default class MainScene extends Phaser.Scene {
         console.log('this card is a ECard');
         this.tempECard = gameObject;
         this.tempECard.setTint(0xff69b4);
-        console.log(this.tempPCard.moles);
+        console.log(this.tempPCard.moles);//moles before reaction
         console.log(this.tempECard.moles);
         let temptemp = this.tempPCard.moles;
         this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
         this.tempECard.moles = this.tempECard.moles - temptemp;
-        console.log(this.tempPCard.moles);
+        console.log(this.tempPCard.moles);//moles after reaction
         console.log(this.tempECard.moles);
         if (this.tempPCard.moles <= 0) {
           console.log('PCard destroyed');
@@ -78,14 +89,32 @@ export default class MainScene extends Phaser.Scene {
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
           let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
-          this.realign('p', destroyedX, destroyedY, -55);
+          // this.realign('p', destroyedX, destroyedY, -55);
           this.tempPCard.destroy();
-          this.zone.data.values.cards--;
+          //this.zone.data.values.cards--;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
           this.tempECard.setTint();
+
+          for (let i of this.pCardGroup) {
+            if (i.onBoard && i.x > destroyedX && i.y == destroyedY) {
+              i.x += -55;
+            }
+          }
+          /* this.pCardGroup.getChildren().forEach(function(child:Card) {
+            if (child.onBoard && child.x > destroyedX && child.y == destroyedY) {
+              child.x += -55;
+            }
+          } */
+          /* for (let i of children) {
+            if (i.onBoard && i.x > destroyedX && i.y == destroyedY) {
+              i.x += -55;
+            }
+          } */
         }
         if (this.tempECard.moles <= 0) {
           console.log('ECard destroyed');
+          //Deal damage to enemy castle based on excess moles
+          this.enemy_castle_health.setText(String(this.enemyHealth - this.tempPCard.moles));
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
           this.tempECard.destroy();
@@ -93,38 +122,28 @@ export default class MainScene extends Phaser.Scene {
             this.tempPCard.attack.setText('moles: ' + String(this.tempPCard.moles));
             this.tempPCard.setTint();
           }
-
-          //Deal damage to enemy castle based on excess moles
-          this.enemy_castle_health.setText(String(this.enemyHealth - this.tempPCard.moles));
         }
       }
-    });    
+    })    
   }
 
   dealCards() {
     console.log("dealt cards");
-    this.pCardGroup = this.add.group({
-        classType: Card,
-        maxSize: 17,
-        runChildUpdate: true
-      });
-      this.eCardGroup = this.add.group({
-        classType: ECard,
-        maxSize: 17,
-        runChildUpdate: true
-      });
     //for (let i = 0; i < 5; i++) {
       //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',1)
-      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder',2)
-      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder',3)
-      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder',4)
-      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',5)
+      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',4)
+      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder',5)
+      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder',5)
+      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder',7)
+      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',8)
+      //this.pCardGroup.push(this.playerCard1, this.playerCard2, this.playerCard3, this.playerCard4, this.playerCard5);
+
       this.enemyCard1 = new ECard(this, 370 + (0), 40, 'card_placeholder',6);
-      this.enemyCard2 = new ECard(this, 370 + (50), 40, 'card_placeholder',7);
-      this.enemyCard3 = new ECard(this, 370 + (100), 40, 'card_placeholder',8);
-      this.enemyCard4 = new ECard(this, 370 + (150), 40, 'card_placeholder',9);
-      this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',10);
+      this.enemyCard2 = new ECard(this, 370 + (50), 40, 'card_placeholder',5);
+      this.enemyCard3 = new ECard(this, 370 + (100), 40, 'card_placeholder',4);
+      this.enemyCard4 = new ECard(this, 370 + (150), 40, 'card_placeholder',3);
+      this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',5);
+      // console.log(this.pCardGroup.getChildren());
       //}
   }
 
@@ -145,15 +164,15 @@ export default class MainScene extends Phaser.Scene {
       }
     }
   } */
-  realign(key, x, y, shift) {
+  /* realign(key, x, y, shift) {
     if (key === 'p') {
-      this.pCardGroup.children.each(function(i) {
-        if (i.onBoard) {
-
+      this.pCardGroup.getChildren().forEach(child => {
+        if (child.data.values.onBoard) {
+          console.log('realign');
         }
       });
     }
-  }
+  } */
 
   /* react() {
     this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
