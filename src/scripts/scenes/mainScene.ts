@@ -22,6 +22,7 @@ export default class MainScene extends Phaser.Scene {
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
   pCardHand: number = 0;
+  pCardBoard: number = 0;
   eCardBoard: number = 0;
 
   pCardGroup: Array<Card> = [];
@@ -89,7 +90,8 @@ export default class MainScene extends Phaser.Scene {
           this.tempPCard.cardType.destroy();
           let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
           this.tempPCard.destroy();
-          //this.zone.data.values.cards--;
+          // this.zone.data.values.cards--;
+          this.pCardBoard -= 1;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
           this.tempECard.setTint();
 

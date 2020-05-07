@@ -41,7 +41,8 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             console.log('dropped in zone');
             if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
-                dropZoneOutline.data.values.cards++;
+                // dropZoneOutline.data.values.cards++;
+                scene.pCardBoard += 1;
                 scene.pCardHand -= 1;
                 console.log(this.startX, this.startY);
                 for (let i of scene.pCardGroup) {
@@ -52,7 +53,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
                     }
                 }
             }
-            this.x = (dropZoneOutline.x - 220) + (dropZoneOutline.data.values.cards * 55);
+            this.x = (dropZoneOutline.x - 220) + (scene.pCardBoard * 55);
             this.y = dropZoneOutline.y;
             this.onBoard = true;
             scene.input.setDraggable(this, false);

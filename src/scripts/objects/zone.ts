@@ -1,7 +1,7 @@
 export default class Zone extends Phaser.GameObjects.Zone {
     constructor(scene: Phaser.Scene, x: number, y: number, w: number, h: number) {
         super(scene, x, y, w, h);
-        this.setData({ cards: 0 });
+        //this.setData({ cards: 0 });
         scene.add.existing(this);
 
         this.setRectangleDropZone(w,h);
