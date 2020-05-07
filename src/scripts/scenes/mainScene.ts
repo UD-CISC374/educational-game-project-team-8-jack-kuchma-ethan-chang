@@ -11,7 +11,7 @@ export default class MainScene extends Phaser.Scene {
 
   zone: Phaser.GameObjects.Zone;
 
-  playerMana: number;
+  playerManaMax: number = 1;
   playerHealth: number = 30;
   enemyHealth: number = 30
   enemyMana: number = 0;
@@ -19,14 +19,18 @@ export default class MainScene extends Phaser.Scene {
   explanation: GameObjects.Text;
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
+  pCardHand: number = 0;
+  eCardHand: number = 0;
 
-  pCardGroup: Array<Card>;
+  //pCardGroup: Phaser.GameObjects.Group;
+  pCardGroup: Array<Card> = [];
   playerCard1: Card;
   playerCard2: Card;
   playerCard3: Card;
   playerCard4: Card;
   playerCard5: Card;
-  eCardGroup: Phaser.GameObjects.Group;
+  //eCardGroup: Phaser.GameObjects.Group;
+  eCardGroup: Array<ECard> = [];
   enemyCard1: ECard;
   enemyCard2: ECard;
   enemyCard3: ECard;
@@ -58,11 +62,11 @@ export default class MainScene extends Phaser.Scene {
       maxSize: 17,
       runChildUpdate: true
     }); */
-    this.eCardGroup = this.add.group({
+    /* this.eCardGroup = this.add.group({
       classType: ECard,
       maxSize: 17,
       runChildUpdate: true
-    });
+    }); */
     
     this.dealCards();
 
@@ -95,11 +99,11 @@ export default class MainScene extends Phaser.Scene {
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
           this.tempECard.setTint();
 
-          for (let i of this.pCardGroup) {
+          /* for (let i of this.pCardGroup) {
             if (i.onBoard && i.x > destroyedX && i.y == destroyedY) {
               i.x += -55;
             }
-          }
+          } */
           /* this.pCardGroup.getChildren().forEach(function(child:Card) {
             if (child.onBoard && child.x > destroyedX && child.y == destroyedY) {
               child.x += -55;
@@ -114,7 +118,8 @@ export default class MainScene extends Phaser.Scene {
         if (this.tempECard.moles <= 0) {
           console.log('ECard destroyed');
           //Deal damage to enemy castle based on excess moles
-          this.enemy_castle_health.setText(String(this.enemyHealth - this.tempPCard.moles));
+          this.enemyHealth -= this.tempPCard.moles
+          this.enemy_castle_health.setText(String(this.enemyHealth));
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
           this.tempECard.destroy();
@@ -129,21 +134,22 @@ export default class MainScene extends Phaser.Scene {
 
   dealCards() {
     console.log("dealt cards");
+    this.pCardHand += 5;
     //for (let i = 0; i < 5; i++) {
       //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
       this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',4)
       this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder',5)
       this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder',5)
       this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder',7)
-      this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',8)
+      //this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',8)
       //this.pCardGroup.push(this.playerCard1, this.playerCard2, this.playerCard3, this.playerCard4, this.playerCard5);
 
+    this.eCardHand += 5;
       this.enemyCard1 = new ECard(this, 370 + (0), 40, 'card_placeholder',6);
       this.enemyCard2 = new ECard(this, 370 + (50), 40, 'card_placeholder',5);
       this.enemyCard3 = new ECard(this, 370 + (100), 40, 'card_placeholder',4);
       this.enemyCard4 = new ECard(this, 370 + (150), 40, 'card_placeholder',3);
-      this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',5);
-      // console.log(this.pCardGroup.getChildren());
+      //this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',5);
       //}
   }
 
@@ -164,40 +170,17 @@ export default class MainScene extends Phaser.Scene {
       }
     }
   } */
-  /* realign(key, x, y, shift) {
-    if (key === 'p') {
-      this.pCardGroup.getChildren().forEach(child => {
-        if (child.data.values.onBoard) {
-          console.log('realign');
-        }
-      });
-    }
-  } */
-
-  /* react() {
-    this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
-    if (this.tempPCard.moles <= 0) {
-      this.tempPCard.destroy();
-    }
-    this.tempECard.moles = this.tempECard.moles - this.tempPCard.moles;
-    if (this.tempECard.moles <= 0) {
-      this.tempECard.destroy();
-    }
-    this.tempPCard;
-    this.tempECard;
-    console.log("reaction");
-  } */
 
 
-  /*playerTurn() {
-    this.drawCard(this.player);
+  playerTurn() {
+    
     this.turn = 2;
-  }*/
+  }
 
-  /*enemyTurn() {
-    this.drawCard(this.enemy);
+  enemyTurn() {
+
     this.turn = 1;
-  }*/
+  }
 
   //This should take an argument; this.player, this.enemy; something to differentiate
   drawCard(foo) {
@@ -208,19 +191,31 @@ export default class MainScene extends Phaser.Scene {
 
 
   update() {
-    /* if (this.turn == 1) {
+    if (this.turn == 1) {
       this.playerTurn();
-      if (this.playerMana < 10) {
-        this.playerMana += 1;
+      if (this.playerManaMax < 10) {
+        this.playerManaMax += 1;
       }
     } else if (this.turn == 2) {
       this.enemyTurn();
       if (this.enemyMana < 10) {
         this.enemyMana += 1;
       }
-    } */
-
-    this.playerCard1.attack.x = this.playerCard1.x - 20;
+    }
+    
+    for (let i of this.pCardGroup) {
+      i.attack.x = i.x - 20;
+      i.attack.y = i.y;
+      i.cardType.x = i.x - 20;
+      i.cardType.y = i.y - 10;
+    }
+    for (let j of this.eCardGroup) {
+      j.attack.x = j.x - 20;
+      j.attack.y = j.y;
+      j.cardType.x = j.x - 20;
+      j.cardType.y = j.x - 10;
+    }
+    /* this.playerCard1.attack.x = this.playerCard1.x - 20;
     this.playerCard1.attack.y = this.playerCard1.y;
     this.playerCard2.attack.x = this.playerCard2.x - 20;
     this.playerCard2.attack.y = this.playerCard2.y;
@@ -240,7 +235,7 @@ export default class MainScene extends Phaser.Scene {
     this.playerCard4.cardType.x = this.playerCard4.x - 20;
     this.playerCard4.cardType.y = this.playerCard4.y - 10;
     this.playerCard5.cardType.x = this.playerCard5.x - 20;
-    this.playerCard5.cardType.y = this.playerCard5.y - 10;
+    this.playerCard5.cardType.y = this.playerCard5.y - 10; */
 
     this.enemyCard1.attack.x = this.enemyCard1.x - 20;
     this.enemyCard1.attack.y = this.enemyCard1.y;
@@ -250,8 +245,8 @@ export default class MainScene extends Phaser.Scene {
     this.enemyCard3.attack.y = this.enemyCard3.y;
     this.enemyCard4.attack.x = this.enemyCard4.x - 20;
     this.enemyCard4.attack.y = this.enemyCard4.y;
-    this.enemyCard5.attack.x = this.enemyCard5.x - 20;
-    this.enemyCard5.attack.y = this.enemyCard5.y;
+    // this.enemyCard5.attack.x = this.enemyCard5.x - 20;
+    // this.enemyCard5.attack.y = this.enemyCard5.y;
 
     this.enemyCard1.cardType.x = this.enemyCard1.x - 20
     this.enemyCard1.cardType.y = this.enemyCard1.y - 10;
@@ -261,7 +256,7 @@ export default class MainScene extends Phaser.Scene {
     this.enemyCard3.cardType.y = this.enemyCard3.y - 10;
     this.enemyCard4.cardType.x = this.enemyCard4.x - 20
     this.enemyCard4.cardType.y = this.enemyCard4.y - 10;
-    this.enemyCard5.cardType.x = this.enemyCard5.x - 20
-    this.enemyCard5.cardType.y = this.enemyCard5.y - 10;
+    // this.enemyCard5.cardType.x = this.enemyCard5.x - 20
+    // this.enemyCard5.cardType.y = this.enemyCard5.y - 10;
   }
 }

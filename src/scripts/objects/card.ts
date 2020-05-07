@@ -16,8 +16,8 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         this.moles = mol
         this.setInteractive();
         scene.input.setDraggable(this);
-        //scene.pCardGroup.add(this);
-        // scene.pCardGroup.push(this);
+        // scene.pCardGroup.add(this);
+        scene.pCardGroup.push(this);
 
         scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.setTint(0xff69b4);
@@ -59,5 +59,18 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             this.value = 0;
         }
         this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
+
+        /* var container = scene.add.container(x,y);
+        container.add(this.attack);
+        container.add(this.cardType);
+        scene.tweens.add({
+            targets: container,
+            x: container.x - 20,
+            y: container.y,
+            ease: 'Power1',
+            duration: 1500,
+            yoyo: true,
+            repeat: -1
+        }) */
     }
 }
