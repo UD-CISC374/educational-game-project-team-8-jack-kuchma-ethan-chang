@@ -15,6 +15,7 @@ export default class ECard extends Phaser.Physics.Arcade.Image {
         this.setInteractive();
         // scene.eCardGroup.add(this);
         scene.eCardGroup.push(this);
+        scene.eCardHand += 1;
         scene.add.existing(this);
 
         x = Math.random();

@@ -18,6 +18,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         scene.input.setDraggable(this);
         // scene.pCardGroup.add(this);
         scene.pCardGroup.push(this);
+        scene.pCardHand += 1;
 
         scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.setTint(0xff69b4);
@@ -41,6 +42,12 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
                 dropZoneOutline.data.values.cards++;
+                scene.pCardHand -= 1;
+                for (let i of scene.pCardGroup) {
+                    if (!(i.onBoard) && i.x > destroyedX && i.y == destroyedY) {
+                        i.x += -55;
+                    }
+                }
             }
             this.x = (dropZoneOutline.x - 220) + (dropZoneOutline.data.values.cards * 55);
             this.y = dropZoneOutline.y;
