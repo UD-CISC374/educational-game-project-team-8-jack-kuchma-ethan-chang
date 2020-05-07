@@ -8,6 +8,8 @@ export default class MainScene extends Phaser.Scene {
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
   card:Phaser.GameObjects.Image;
+  endTurn: Phaser.GameObjects.Text;
+  dealt: boolean = false;
 
   zone: Phaser.GameObjects.Zone;
 
@@ -26,7 +28,6 @@ export default class MainScene extends Phaser.Scene {
   playerCard: Card;
   eCardGroup: Array<ECard> = [];
   enemyCard: ECard;
-
   tempPCard: Card;
   tempECard: ECard;
 
@@ -49,6 +50,7 @@ export default class MainScene extends Phaser.Scene {
     "\nTake the enemy's health to 0.",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
+    this.endTurn = this.add.text(this.scale.width - 90, this.scale.height/2 - 20, 'END TURN', {font: '16px Arial', fill: 'white'}).setInteractive();
 
     /* this.pCardGroup = this.add.group({
       classType: Card,
@@ -86,7 +88,6 @@ export default class MainScene extends Phaser.Scene {
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
           let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
-          // this.realign('p', destroyedX, destroyedY, -55);
           this.tempPCard.destroy();
           //this.zone.data.values.cards--;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
@@ -112,7 +113,21 @@ export default class MainScene extends Phaser.Scene {
           }
         }
       }
-    })    
+    })
+
+    this.endTurn.on('pointerdown', () => {
+      if (!this.dealt) {
+        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
+      }
+      this.dealt = true;
+      this.turn = 2;
+    })
+    this.endTurn.on('pointerover', () => {
+      this.endTurn.setColor('#ff69b4');
+    })
+    this.endTurn.on('pointerout', () => {
+      this.endTurn.setColor('white');
+    })
   }
 
   dealCards() {
@@ -123,42 +138,14 @@ export default class MainScene extends Phaser.Scene {
       }
   }
 
-  /* realign(key, x, y, shift) {
-    if (key === 'p') {
-      var children = this.pCardGroup.getChildren();
-      for (let i of children) {
-        if (i.onBoard && i.x > x && i.y == y) {
-          i.x += shift;
-        }
-      }
-    } else if (key === 'e') {
-      var children = this.eCardGroup.getChildren();
-      for (let j of children) {
-        if (j.onBoard && j.x > x, && j.y == y) {
-          j.y += shift;
-        }
-      }
-    }
-  } */
-
-
   playerTurn() {
-    this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-    this.turn = 2;
+
   }
 
   enemyTurn() {
-
+    this.dealt = false;
     this.turn = 1;
   }
-
-  //This should take an argument; this.player, this.enemy; something to differentiate
-  drawCard(foo) {
-    //should play the animation for drawing a card from deck
-    foo.count += 1;
-  }
-
-
 
   update() {
     if (this.turn == 1) {
