@@ -43,7 +43,10 @@ export default class MainScene extends Phaser.Scene {
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
     this.enemy_castle_health = this.add.text(320, 60, String(this.enemyHealth), {fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
 
-    this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of molarity and moles. \nMolarity is the damage done to the player if it attack a player directly. \nMoles is the card's health as well as the damage done to other cards. \nTake the enemy's health to 0 before they do to yours",{fontSize: '10px', fill: '#000'});
+    this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of moles. " + 
+    "\nMoles is the card's health as well as the damage done to other cards. \nWhen attacking, if your card is the excess reagent," + 
+    "\ndamage is done to the enemy castle based on your excess moles. \n Drag cards onto the board, then click it and an enemy card to react them." + 
+    "\nTake the enemy's health to 0.",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
 
@@ -140,7 +143,7 @@ export default class MainScene extends Phaser.Scene {
 
 
   playerTurn() {
-    
+    this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
     this.turn = 2;
   }
 
@@ -165,9 +168,6 @@ export default class MainScene extends Phaser.Scene {
       }
     } else if (this.turn == 2) {
       this.enemyTurn();
-      if (this.enemyMana < 10) {
-        this.enemyMana += 1;
-      }
     }
     
     for (let i of this.pCardGroup) {

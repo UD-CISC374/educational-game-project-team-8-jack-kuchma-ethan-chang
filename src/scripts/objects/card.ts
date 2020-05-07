@@ -20,20 +20,20 @@ export default class Card extends Phaser.Physics.Arcade.Image {
         scene.pCardGroup.push(this);
         scene.pCardHand += 1;
 
-        scene.input.on('drag', function(pointer, gameObject, dragX, dragY) {
+        scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.setTint(0xff69b4);
             //scene.children.bringToTop(gameObject);
+            this.startX = gameObject.input.dragStartX;
+            this.startY = gameObject.input.dragStartY;
             gameObject.x = dragX;
             gameObject.y = dragY;
         })
 
-        scene.input.on('dragend', function(pointer, gameObject, dropped) {
+        scene.input.on('dragend', (pointer, gameObject, dropped) => {
             gameObject.setTint();
             if (!dropped) {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
-                globalThis.startX = gameObject.input.dragStartX;
-                globalThis.startY = gameObject.input.dragStartY;
             }
         })
 
@@ -43,8 +43,11 @@ export default class Card extends Phaser.Physics.Arcade.Image {
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
                 dropZoneOutline.data.values.cards++;
                 scene.pCardHand -= 1;
+                console.log(this.startX, this.startY);
                 for (let i of scene.pCardGroup) {
-                    if (!(i.onBoard) && i.x > globalThis.startX && i.y == globalThis.startY) {
+                    console.log(i.x, i.y, this.startX, this.startY);
+                    if (!(i.onBoard) && i.x > this.startX && i.y == this.startY) {
+                        console.log('fixed');
                         i.x += -50;
                     }
                 }
