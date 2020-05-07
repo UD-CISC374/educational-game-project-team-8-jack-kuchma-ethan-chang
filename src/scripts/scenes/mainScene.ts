@@ -166,8 +166,8 @@ export default class MainScene extends Phaser.Scene {
     } else if (this.turn == 2) {
       this.enemyTurn();
     }
-    if (this.enemyHealth == 0) {
-      this.add.text(this.scale.width/2, this.scale.height/2, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
+    if (this.enemyHealth <= 0) {
+      this.add.text(this.scale.width/2 -50, this.scale.height/2-40, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
     }
     
     for (let i of this.pCardGroup) {
