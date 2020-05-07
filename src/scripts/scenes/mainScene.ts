@@ -108,6 +108,7 @@ export default class MainScene extends Phaser.Scene {
           this.tempECard.cardType.destroy();
           let destroyedX = this.tempECard.x; let destroyedY = this.tempECard.y;
           this.tempECard.destroy();
+          this.eCardBoard -= 1;
           for (let j of this.eCardGroup) {
             if (j.onBoard && j.x > destroyedX && j.y == destroyedY) {
               j.x += -50;
@@ -140,7 +141,7 @@ export default class MainScene extends Phaser.Scene {
     console.log("dealt cards");
     for (let i = 0; i < 4; i++) {
       this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-      this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height / 2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+      this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
       }
   }
 
@@ -149,6 +150,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   enemyTurn() {
+    this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
     this.dealt = false;
     this.turn = 1;
   }
