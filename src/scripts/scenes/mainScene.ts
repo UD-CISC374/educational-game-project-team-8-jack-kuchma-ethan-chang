@@ -46,7 +46,7 @@ export default class MainScene extends Phaser.Scene {
 
     this.explanation = this.add.text(10,50,"These cards are either an acid or base. \nThe cards contain stats of moles. " + 
     "\nMoles is the card's health as well as the damage done to other cards. \nWhen attacking, if your card is the excess reagent," + 
-    "\ndamage is done to the enemy castle based on your excess moles. \n Drag cards onto the board, then click it and an enemy card to react them." + 
+    "\ndamage is done to the enemy castle based on your excess moles. \nDrag cards onto the board, then click it and an enemy card to react them." + 
     "\nTake the enemy's health to 0.",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
@@ -163,6 +163,9 @@ export default class MainScene extends Phaser.Scene {
       }
     } else if (this.turn == 2) {
       this.enemyTurn();
+    }
+    if (this.enemyHealth == 0) {
+      this.add.text(this.scale.width/2, this.scale.height/2, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
     }
     
     for (let i of this.pCardGroup) {
