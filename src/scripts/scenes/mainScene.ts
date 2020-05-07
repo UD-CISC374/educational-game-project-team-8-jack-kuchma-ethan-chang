@@ -22,20 +22,10 @@ export default class MainScene extends Phaser.Scene {
   pCardHand: number = 0;
   eCardHand: number = 0;
 
-  //pCardGroup: Phaser.GameObjects.Group;
   pCardGroup: Array<Card> = [];
-  playerCard1: Card;
-  playerCard2: Card;
-  playerCard3: Card;
-  playerCard4: Card;
-  playerCard5: Card;
-  //eCardGroup: Phaser.GameObjects.Group;
+  playerCard: Card;
   eCardGroup: Array<ECard> = [];
-  enemyCard1: ECard;
-  enemyCard2: ECard;
-  enemyCard3: ECard;
-  enemyCard4: ECard;
-  enemyCard5: ECard;
+  enemyCard: ECard;
 
   tempPCard: Card;
   tempECard: ECard;
@@ -124,20 +114,10 @@ export default class MainScene extends Phaser.Scene {
 
   dealCards() {
     console.log("dealt cards");
-    //for (let i = 0; i < 5; i++) {
-      //this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder').setInteractive();
-      this.playerCard1 = new Card(this, 20 + (0), this.scale.height - 45, 'card_placeholder',4)
-      this.playerCard2 = new Card(this, 20 + (50), this.scale.height - 45, 'card_placeholder',5)
-      this.playerCard3 = new Card(this, 20 + (100), this.scale.height - 45, 'card_placeholder',5)
-      this.playerCard4 = new Card(this, 20 + (150), this.scale.height - 45, 'card_placeholder',7)
-      //this.playerCard5 = new Card(this, 20 + (200), this.scale.height - 45, 'card_placeholder',8)
-
-      this.enemyCard1 = new ECard(this, 370 + (0), 40, 'card_placeholder',6);
-      this.enemyCard2 = new ECard(this, 370 + (50), 40, 'card_placeholder',5);
-      this.enemyCard3 = new ECard(this, 370 + (100), 40, 'card_placeholder',4);
-      this.enemyCard4 = new ECard(this, 370 + (150), 40, 'card_placeholder',3);
-      //this.enemyCard5 = new ECard(this, 370 + (200), 40, 'card_placeholder',5);
-      //}
+    for (let i = 0; i < 4; i++) {
+      this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
+      this.enemyCard = new ECard(this, 370 + (i*50), 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+      }
   }
 
   /* realign(key, x, y, shift) {
@@ -202,48 +182,5 @@ export default class MainScene extends Phaser.Scene {
       j.cardType.x = j.x - 20;
       j.cardType.y = j.y - 10;
     }
-    /* this.playerCard1.attack.x = this.playerCard1.x - 20;
-    this.playerCard1.attack.y = this.playerCard1.y;
-    this.playerCard2.attack.x = this.playerCard2.x - 20;
-    this.playerCard2.attack.y = this.playerCard2.y;
-    this.playerCard3.attack.x = this.playerCard3.x - 20;
-    this.playerCard3.attack.y = this.playerCard3.y;
-    this.playerCard4.attack.x = this.playerCard4.x - 20;
-    this.playerCard4.attack.y = this.playerCard4.y;
-    this.playerCard5.attack.x = this.playerCard5.x - 20;
-    this.playerCard5.attack.y = this.playerCard5.y;
-
-    this.playerCard1.cardType.x = this.playerCard1.x - 20;
-    this.playerCard1.cardType.y = this.playerCard1.y - 10;
-    this.playerCard2.cardType.x = this.playerCard2.x - 20;
-    this.playerCard2.cardType.y = this.playerCard2.y - 10;
-    this.playerCard3.cardType.x = this.playerCard3.x - 20;
-    this.playerCard3.cardType.y = this.playerCard3.y - 10;
-    this.playerCard4.cardType.x = this.playerCard4.x - 20;
-    this.playerCard4.cardType.y = this.playerCard4.y - 10;
-    this.playerCard5.cardType.x = this.playerCard5.x - 20;
-    this.playerCard5.cardType.y = this.playerCard5.y - 10; */
-
-    /* this.enemyCard1.attack.x = this.enemyCard1.x - 20;
-    this.enemyCard1.attack.y = this.enemyCard1.y;
-    this.enemyCard2.attack.x = this.enemyCard2.x - 20;
-    this.enemyCard2.attack.y = this.enemyCard2.y;
-    this.enemyCard3.attack.x = this.enemyCard3.x - 20;
-    this.enemyCard3.attack.y = this.enemyCard3.y;
-    this.enemyCard4.attack.x = this.enemyCard4.x - 20;
-    this.enemyCard4.attack.y = this.enemyCard4.y; */
-    // this.enemyCard5.attack.x = this.enemyCard5.x - 20;
-    // this.enemyCard5.attack.y = this.enemyCard5.y;
-
-    /* this.enemyCard1.cardType.x = this.enemyCard1.x - 20
-    this.enemyCard1.cardType.y = this.enemyCard1.y - 10;
-    this.enemyCard2.cardType.x = this.enemyCard2.x - 20
-    this.enemyCard2.cardType.y = this.enemyCard2.y - 10;
-    this.enemyCard3.cardType.x = this.enemyCard3.x - 20
-    this.enemyCard3.cardType.y = this.enemyCard3.y - 10;
-    this.enemyCard4.cardType.x = this.enemyCard4.x - 20
-    this.enemyCard4.cardType.y = this.enemyCard4.y - 10; */
-    // this.enemyCard5.cardType.x = this.enemyCard5.x - 20
-    // this.enemyCard5.cardType.y = this.enemyCard5.y - 10;
   }
 }

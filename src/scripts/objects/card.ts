@@ -44,8 +44,8 @@ export default class Card extends Phaser.Physics.Arcade.Image {
                 dropZoneOutline.data.values.cards++;
                 scene.pCardHand -= 1;
                 for (let i of scene.pCardGroup) {
-                    if (!(i.onBoard) && i.x > destroyedX && i.y == destroyedY) {
-                        i.x += -55;
+                    if (!(i.onBoard) && i.x > globalThis.startX && i.y == globalThis.startY) {
+                        i.x += -50;
                     }
                 }
             }
