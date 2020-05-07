@@ -22,7 +22,7 @@ export default class MainScene extends Phaser.Scene {
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
   pCardHand: number = 0;
-  eCardHand: number = 0;
+  eCardBoard: number = 0;
 
   pCardGroup: Array<Card> = [];
   playerCard: Card;
@@ -44,7 +44,7 @@ export default class MainScene extends Phaser.Scene {
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
     this.enemy_castle_health = this.add.text(320, 60, String(this.enemyHealth), {fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
 
-    this.explanation = this.add.text(10,80,"These cards are either an acid or base. \nThe cards contain stats of moles. " + 
+    this.explanation = this.add.text(10,50,"These cards are either an acid or base. \nThe cards contain stats of moles. " + 
     "\nMoles is the card's health as well as the damage done to other cards. \nWhen attacking, if your card is the excess reagent," + 
     "\ndamage is done to the enemy castle based on your excess moles. \n Drag cards onto the board, then click it and an enemy card to react them." + 
     "\nTake the enemy's health to 0.",{fontSize: '10px', fill: '#000'});
@@ -106,7 +106,13 @@ export default class MainScene extends Phaser.Scene {
           this.enemy_castle_health.setText(String(this.enemyHealth));
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
+          let destroyedX = this.tempECard.x; let destroyedY = this.tempECard.y;
           this.tempECard.destroy();
+          for (let j of this.eCardGroup) {
+            if (j.onBoard && j.x > destroyedX && j.y == destroyedY) {
+              j.x += -50;
+            }
+          }
           if (this.tempPCard.attack != undefined) {
             this.tempPCard.attack.setText('moles: ' + String(this.tempPCard.moles));
             this.tempPCard.setTint();
@@ -134,7 +140,7 @@ export default class MainScene extends Phaser.Scene {
     console.log("dealt cards");
     for (let i = 0; i < 4; i++) {
       this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-      this.enemyCard = new ECard(this, 370 + (i*50), 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+      this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height / 2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
       }
   }
 
