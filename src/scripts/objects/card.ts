@@ -39,6 +39,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
 
         this.on('drop', (pointer, dropZoneOutline) => {
             console.log('dropped in zone');
+            
             if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
                 // dropZoneOutline.data.values.cards++;

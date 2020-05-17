@@ -34,6 +34,7 @@ export default class MainScene extends Phaser.Scene {
 
   private tutorialTextArray: Array<GameObjects.Text> = [];
   private tutorialMessageNumber: number = 0;
+  victory: Phaser.Sound.BaseSound;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -50,6 +51,7 @@ export default class MainScene extends Phaser.Scene {
     
     this.zone = new Zone(this, 300, 250, 420, 80);
     this.endTurn = this.add.text(this.scale.width - 90, this.scale.height/2 - 20, 'END TURN', {font: '16px Arial', fill: 'white'}).setInteractive();
+    this.victory = this.sound.add("victory");
 
     /* this.pCardGroup = this.add.group({
       classType: Card,
@@ -204,6 +206,7 @@ export default class MainScene extends Phaser.Scene {
       this.enemyTurn();
     }
     if (this.enemyHealth <= 0) {
+      this.victory.play();
       this.add.text(this.scale.width/2 -50, this.scale.height/2-40, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
     }
     
