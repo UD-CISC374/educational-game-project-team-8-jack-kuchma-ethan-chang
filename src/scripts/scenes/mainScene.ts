@@ -1,4 +1,4 @@
-import { GameObjects } from 'phaser';
+import { GameObjects, Tilemaps } from 'phaser';
 import Card from '../objects/card';
 import ECard from '../objects/ecard';
 import Zone from '../objects/zone';
@@ -24,6 +24,8 @@ export default class MainScene extends Phaser.Scene {
   pCardHand: number = 0;
   pCardBoard: number = 0;
   eCardBoard: number = 0;
+  pTurnText: GameObjects.Text;
+  eTurnText: GameObjects.Text;
 
   pCardGroup: Array<Card> = [];
   playerCard: Card;
@@ -52,6 +54,11 @@ export default class MainScene extends Phaser.Scene {
     this.zone = new Zone(this, 300, 250, 420, 80);
     this.endTurn = this.add.text(this.scale.width - 90, this.scale.height/2 - 20, 'END TURN', {font: '16px Arial', fill: 'white'}).setInteractive();
     this.victory = this.sound.add("victory");
+
+    this.pTurnText = this.add.text(10, 10, "Your turn", {fill: 'magenta', font: "12px Arial"});
+    this.eTurnText = this.add.text(10, 10, "Enemy turn", {fill: 'red', font: '12px arial'});
+    this.pTurnText.setVisible(false);
+    this.eTurnText.setVisible(false);
 
     /* this.pCardGroup = this.add.group({
       classType: Card,
@@ -125,10 +132,6 @@ export default class MainScene extends Phaser.Scene {
     })
 
     this.endTurn.on('pointerdown', () => {
-      /* if (!this.dealt) {
-        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-      } */
-      //this.dealt = true;
       this.turn = 2;
     })
     this.endTurn.on('pointerover', () => {
@@ -137,8 +140,6 @@ export default class MainScene extends Phaser.Scene {
     this.endTurn.on('pointerout', () => {
       this.endTurn.setColor('white');
     })
-
-    
   }
 
   makeText(text: string, x: number, y: number) {
@@ -187,6 +188,8 @@ export default class MainScene extends Phaser.Scene {
   }
 
   playerTurn() {
+    this.pTurnText.setVisible(true);
+    this.eTurnText.setVisible(false);
     if (!this.dealt) {
       this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
     }
@@ -194,6 +197,8 @@ export default class MainScene extends Phaser.Scene {
   }
 
   enemyTurn() {
+    this.pTurnText.setVisible(false);
+    this.eTurnText.setVisible(true);
     if (this.dealt) {
       this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
     }
