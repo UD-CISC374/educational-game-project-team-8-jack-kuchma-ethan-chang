@@ -17,7 +17,7 @@ export default class MainScene extends Phaser.Scene {
   playerHealth: number = 30;
   enemyHealth: number = 30
   enemyMana: number = 0;
-  turn: number = 0;
+  turn: number = 1;
   explanation: GameObjects.Text;
   player_castle_health: GameObjects.Text;
   enemy_castle_health: GameObjects.Text;
@@ -125,10 +125,10 @@ export default class MainScene extends Phaser.Scene {
     })
 
     this.endTurn.on('pointerdown', () => {
-      if (!this.dealt) {
+      /* if (!this.dealt) {
         this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-      }
-      this.dealt = true;
+      } */
+      //this.dealt = true;
       this.turn = 2;
     })
     this.endTurn.on('pointerover', () => {
@@ -155,7 +155,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   runTutorial(messageNumber: number): void {
-    let handCardText: string = "These cards are either acid or base.\n Mole is the card's health as well as the damage done to the other cards.";
+    let handCardText: string = "These cards are either acid or base.                                                  [Click]\n Mole is the card's health as well as the damage done to the other cards.";
     let fieldText: string = "This is the battlefield where you can drag and drop cards.\n When it's on the board, click on your card then an enemy card to attack."
     let attackText: string = "When attacking, if your card is the excess reagent,\n damage is done to the enemy castle based on your excess moles."
     let winText: string  = "Take the enemy castle's health down to 0 to win!"
@@ -187,23 +187,30 @@ export default class MainScene extends Phaser.Scene {
   }
 
   playerTurn() {
-
+    if (!this.dealt) {
+      this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
+    }
+    this.dealt = true;
   }
 
   enemyTurn() {
-    this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+    if (this.dealt) {
+      this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+    }
     this.dealt = false;
     this.turn = 1;
   }
 
   update() {
     if (this.turn == 1) {
-      this.playerTurn();
+      this.time.delayedCall(1000, this.playerTurn, [], this);
+      //this.playerTurn();
       if (this.playerManaMax < 10) {
         this.playerManaMax += 1;
       }
     } else if (this.turn == 2) {
-      this.enemyTurn();
+      this.time.delayedCall(1000, this.enemyTurn, [], this);
+      //this.enemyTurn();
     }
     if (this.enemyHealth <= 0) {
       this.victory.play();
