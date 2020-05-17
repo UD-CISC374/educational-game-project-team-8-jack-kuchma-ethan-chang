@@ -18,14 +18,14 @@ export default class ECard extends Phaser.Physics.Arcade.Image {
         scene.eCardBoard += 1;
         scene.add.existing(this);
 
-        x = Math.random();
-        if (x > 0.5) {
+        if (card == 'red_flask') {
             this.cardType = scene.add.text(this.x, this.y, 'Acid', {font: "10px Arial", fill: "black"});
             this.value = 1;
+            this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
         } else {
-            this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "black"});
-            this.value = 0
+            this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "white"});
+            this.value = 0;
+            this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "white"});
         }
-        this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
     }
 }

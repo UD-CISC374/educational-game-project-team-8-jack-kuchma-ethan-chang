@@ -182,16 +182,27 @@ export default class MainScene extends Phaser.Scene {
   dealCards() {
     console.log("dealt cards");
     for (let i = 0; i < 4; i++) {
-      this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
-      this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+      let r = Math.random();
+      if (r > 0.5) {
+        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2));
+        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1));
+      } else {
+        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2));
+        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1));
       }
+    }
   }
 
   playerTurn() {
     this.pTurnText.setVisible(true);
     this.eTurnText.setVisible(false);
     if (!this.dealt) {
-      this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'card_placeholder', Math.floor(4 * Math.random() + 2));
+      let r = Math.random();
+      if (r > 0.5) {
+        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2));
+      } else {
+        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2));
+      }
     }
     this.dealt = true;
   }
@@ -200,7 +211,12 @@ export default class MainScene extends Phaser.Scene {
     this.pTurnText.setVisible(false);
     this.eTurnText.setVisible(true);
     if (this.dealt) {
-      this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'card_placeholder', Math.floor(4 * Math.random() + 1));
+      let r = Math.random();
+      if (r > 0.5) {
+        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1));
+      } else {
+        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1));
+      }
     }
     this.dealt = false;
     this.turn = 1;

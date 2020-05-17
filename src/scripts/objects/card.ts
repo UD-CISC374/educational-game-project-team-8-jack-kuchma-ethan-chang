@@ -8,6 +8,7 @@ export default class Card extends Phaser.Physics.Arcade.Image {
     startY: number;
     onBoard: boolean = false;
 
+    r = Math.random();
     constructor(scene, x: number, y: number, card: string, mol: number) {
         /* I imagine some type of hash table like thing where the key('acid','base','spell') is passed 
         to this card object.
@@ -62,15 +63,15 @@ export default class Card extends Phaser.Physics.Arcade.Image {
 
         scene.add.existing(this);
 
-        x = Math.random();
-        if (x > 0.5) {
+        if (card == 'red_flask') {
             this.cardType = scene.add.text(this.x, this.y, 'Acid', {font: "10px Arial", fill: "black"});
             this.value = 1;
+            this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
         } else {
-            this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "black"});
+            this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "white"});
             this.value = 0;
+            this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "white"});
         }
-        this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
 
         /* var container = scene.add.container(x,y);
         container.add(this.attack);
