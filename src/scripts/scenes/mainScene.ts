@@ -4,7 +4,7 @@ import ECard from '../objects/ecard';
 import Zone from '../objects/zone';
 
 export default class MainScene extends Phaser.Scene {
-  background: Phaser.GameObjects.Image;
+  background: Phaser.GameObjects.TileSprite;
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
   card:Phaser.GameObjects.Image;
@@ -32,23 +32,21 @@ export default class MainScene extends Phaser.Scene {
   tempPCard: Card;
   tempECard: ECard;
 
+  private tutorialTextArray: Array<GameObjects.Text> = [];
+  private tutorialMessageNumber: number = 0;
+
   constructor() {
     super({ key: 'MainScene' });
   }
 
   create() {
-    this.background = this.add.image(0, 0, "grass");
+    this.background = this.add.tileSprite(0, 0, this.scale.width, this.scale.height, "grass");
     this.background.setOrigin(0, 0);
     this.player_castle = this.add.image(this.scale.width/2, this.scale.height - 45, "player_castle");
     this.player_castle_health = this.add.text(320, 380, String(this.playerHealth),{fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
 
     this.enemy_castle = this.add.image(this.scale.width/2, 40, "enemy_castle");
     this.enemy_castle_health = this.add.text(320, 60, String(this.enemyHealth), {fill: "#FF0000", fontWeight: "bold", backgroundColor: "#FFFFFF"});
-
-    this.explanation = this.add.text(10,50,"These cards are either an acid or base. \nThe cards contain stats of moles. " + 
-    "\nMoles is the card's health as well as the damage done to other cards. \nWhen attacking, if your card is the excess reagent," + 
-    "\ndamage is done to the enemy castle based on your excess moles. \nDrag cards onto the board, then click it and an enemy card to react them." + 
-    "\nTake the enemy's health to 0.",{fontSize: '10px', fill: '#000'});
     
     this.zone = new Zone(this, 300, 250, 420, 80);
     this.endTurn = this.add.text(this.scale.width - 90, this.scale.height/2 - 20, 'END TURN', {font: '16px Arial', fill: 'white'}).setInteractive();
@@ -137,6 +135,45 @@ export default class MainScene extends Phaser.Scene {
     this.endTurn.on('pointerout', () => {
       this.endTurn.setColor('white');
     })
+
+    
+  }
+
+  makeText(text: string, x: number, y: number) {
+    let textDisplay = this.add.text(0, 0, text, {fill: "black", font: "bold 12px Serif"});
+    textDisplay.setBackgroundColor("tan");
+    textDisplay.setX((this.scale.width/2) - (textDisplay.width/2) + x);
+    textDisplay.setY((this.scale.height/2) - (textDisplay.height/2) + y);
+    textDisplay.setInteractive();
+    textDisplay.on("pointerdown", () => {
+      textDisplay.destroy();
+      this.tutorialTextArray.pop();
+    });
+    this.tutorialTextArray.push(textDisplay);
+  }
+
+  runTutorial(messageNumber: number): void {
+    let handCardText: string = "These cards are either acid or base.\n Mole is the card's health as well as the damage done to the other cards.";
+    let fieldText: string = "This is the battlefield where you can drag and drop cards.\n When it's on the board, click on your card then an enemy card to attack."
+    let attackText: string = "When attacking, if your card is the excess reagent,\n damage is done to the enemy castle based on your excess moles."
+    let winText: string  = "Take the enemy castle's health down to 0 to win!"
+    let stringList: Array<string> = [handCardText, fieldText, attackText, winText];
+    if (messageNumber > stringList.length-1)
+      return;
+    switch(messageNumber) {
+      case 0: // handCard Text
+        this.makeText(stringList[messageNumber], -110, 100); // Display it above the cards
+        break;
+      case 1: // field Text
+        this.makeText(stringList[messageNumber], -110, 40); // Display it in the battlefield
+        break;
+      case 2: // attack Text
+        this.makeText(stringList[messageNumber], -110, 40);//Display in the battlefield
+        break;
+      case 3: // winText
+        this.makeText(stringList[messageNumber], 176, -150);//Display right of castle
+        break;
+    }
   }
 
   dealCards() {
@@ -181,6 +218,11 @@ export default class MainScene extends Phaser.Scene {
       j.attack.y = j.y;
       j.cardType.x = j.x - 20;
       j.cardType.y = j.y - 10;
+    }
+
+    if (!this.tutorialTextArray.length) {
+      this.runTutorial(this.tutorialMessageNumber);
+      this.tutorialMessageNumber++;
     }
   }
 }
