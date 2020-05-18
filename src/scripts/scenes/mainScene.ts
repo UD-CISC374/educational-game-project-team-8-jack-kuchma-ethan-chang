@@ -80,6 +80,9 @@ export default class MainScene extends Phaser.Scene {
       console.log('gameobjectdown');
       if (gameObject instanceof Card) {
         console.log('this card is a PCard');
+        if (this.tempPCard != undefined) {
+          this.tempPCard.setTint();
+        }
         this.tempPCard = gameObject;
         this.tempPCard.setTint(0xff69b4);
       } else if (gameObject instanceof ECard && this.tempPCard.value != gameObject.value) { // Checks to see if ur attacking an opposite type card
