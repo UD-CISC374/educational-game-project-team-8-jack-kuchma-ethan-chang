@@ -7,9 +7,11 @@ export default class MainScene extends Phaser.Scene {
   background: Phaser.GameObjects.TileSprite;
   player_castle: Phaser.GameObjects.Image;
   enemy_castle: Phaser.GameObjects.Image;
-  card:Phaser.GameObjects.Image;
+  card: Phaser.GameObjects.Image;
   endTurn: Phaser.GameObjects.Text;
   dealt: boolean = false;
+  round: number = 1;
+  roundDisplay: Phaser.GameObjects.Text;
 
   zone: Phaser.GameObjects.Zone;
 
@@ -72,6 +74,7 @@ export default class MainScene extends Phaser.Scene {
     }); */
     
     this.dealCards();
+    this.roundDisplay = this.add.text(this.scale.width - 80, 10, "Round: " + String(this.round), {fill: 'black', font: '14px Arial'});
 
     this.input.on('gameobjectdown', (pointer, gameObject) => {
       console.log('gameobjectdown');
@@ -156,6 +159,7 @@ export default class MainScene extends Phaser.Scene {
 
     this.endTurn.on('pointerdown', () => {
       this.turn = 2;
+      this.round += 1;
     })
     this.endTurn.on('pointerover', () => {
       this.endTurn.setColor('#ff69b4');
@@ -217,6 +221,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   playerTurn() {
+    this.roundDisplay.setText("Round: " + String(this.round));
     this.pTurnText.setVisible(true);
     this.eTurnText.setVisible(false);
     if (!this.dealt) {
