@@ -299,7 +299,7 @@ export default class MainScene extends Phaser.Scene {
       j.cardType.x = j.x - 20;
       j.cardType.y = j.y - 10;
 
-      j.heal.x = j.x-20;//volume
+      j.heal.x = j.x-20;//volume text
       j.heal.y = j.y-20;
 
     }
