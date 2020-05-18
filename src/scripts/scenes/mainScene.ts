@@ -218,7 +218,7 @@ export default class MainScene extends Phaser.Scene {
 
   dealCards() {
     console.log("dealt cards");
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       let r = Math.random();
       if (r > 0.5) {
         this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2),Math.floor(4 * Math.random() + 2));
