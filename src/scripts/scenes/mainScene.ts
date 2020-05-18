@@ -77,7 +77,6 @@ export default class MainScene extends Phaser.Scene {
     this.roundDisplay = this.add.text(this.scale.width - 80, 10, "Round: " + String(this.round), {fill: 'black', font: '14px Arial'});
 
     this.input.on('gameobjectdown', (pointer, gameObject) => {
-      console.log('gameobjectdown');
       if (gameObject instanceof Card) {
         console.log('this card is a PCard');
         if (this.tempPCard != undefined) {
@@ -89,8 +88,6 @@ export default class MainScene extends Phaser.Scene {
         console.log('this card is a ECard');
         this.tempECard = gameObject;
         this.tempECard.setTint(0xff69b4);
-        console.log(this.tempPCard.moles);//moles before reaction
-        console.log(this.tempECard.moles);
 
         if (this.tempPCard.value == 1) {
           let eq = this.add.text(10, 80, String(this.tempPCard.moles) + " moles Acid - " + String(this.tempECard.moles) + " moles Base", {fill: 'black', font: '16px Arial'});
@@ -117,20 +114,23 @@ export default class MainScene extends Phaser.Scene {
         let temptemp = this.tempPCard.moles;
         this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
         this.tempECard.moles = this.tempECard.moles - temptemp;
-        console.log(this.tempPCard.moles);//moles after reaction
-        console.log(this.tempECard.moles);
+
         if (this.tempPCard.moles <= 0) {
           console.log('PCard destroyed');
           this.tempPCard.moles = 0;
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
           let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
+          //delete this.pCardGroup[this.pCardGroup.indexOf(this.tempPCard)];
+          const index = this.pCardGroup.indexOf(this.tempPCard);
+          if (index > -1) {
+            this.pCardGroup.splice(index, 1);
+          }
           this.tempPCard.destroy();
-          // this.zone.data.values.cards--;
           this.pCardBoard -= 1;
           this.tempECard.attack.setText('moles: ' + String(this.tempECard.moles));
           this.tempECard.setTint();
-
+          //shifts player cards on the board
           for (let i of this.pCardGroup) {
             if (i.onBoard && i.x > destroyedX && i.y == destroyedY) {
               i.x += -55;
@@ -145,8 +145,13 @@ export default class MainScene extends Phaser.Scene {
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
           let destroyedX = this.tempECard.x; let destroyedY = this.tempECard.y;
+          const index = this.eCardGroup.indexOf(this.tempECard);
+          if (index > -1) {
+            this.eCardGroup.splice(index, 1);
+          }
           this.tempECard.destroy();
           this.eCardBoard -= 1;
+          //shifts enemy cards on the board
           for (let j of this.eCardGroup) {
             if (j.onBoard && j.x > destroyedX && j.y == destroyedY) {
               j.x += -50;
@@ -248,6 +253,12 @@ export default class MainScene extends Phaser.Scene {
       } else {
         this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1));
       }
+      for (let j of this.eCardGroup) {
+        if (j.onBoard) {
+          this.playerHealth = this.playerHealth - j.moles;
+        }
+      }
+      this.player_castle_health.setText(String(this.playerHealth));
     }
     this.dealt = false;
     this.turn = 1;

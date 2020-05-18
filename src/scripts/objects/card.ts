@@ -46,11 +46,8 @@ export default class Card extends Phaser.Physics.Arcade.Image {
                 // dropZoneOutline.data.values.cards++;
                 scene.pCardBoard += 1;
                 scene.pCardHand -= 1;
-                console.log(this.startX, this.startY);
                 for (let i of scene.pCardGroup) {
-                    console.log(i.x, i.y, this.startX, this.startY);
                     if (!(i.onBoard) && i.x > this.startX && i.y == this.startY) {
-                        console.log('fixed');
                         i.x += -50;
                     }
                 }
