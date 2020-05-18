@@ -10,6 +10,7 @@ export default class MainScene extends Phaser.Scene {
   card: Phaser.GameObjects.Image;
   endTurn: Phaser.GameObjects.Text;
   dealt: boolean = false;
+  healed: boolean = false;
   round: number = 1;
   roundDisplay: Phaser.GameObjects.Text;
 
@@ -170,12 +171,28 @@ export default class MainScene extends Phaser.Scene {
     this.endTurn.on('pointerdown', () => {
       this.turn = 2;
       this.round += 1;
+      this.healed = false;
     })
     this.endTurn.on('pointerover', () => {
       this.endTurn.setColor('#ff69b4');
     })
     this.endTurn.on('pointerout', () => {
       this.endTurn.setColor('white');
+    })
+
+    //this.input.mouse.disableContextMenu();
+    this.input.on('pointerdown', (pointer, gameObject) => {
+      if (/* gameObject instanceof Card &&  *//* gameObject.onBoard &&  */pointer.rightButtonDown()/*  && this.healed == false */) {
+        if (gameObject instanceof Card) {
+          console.log('healed');
+          //gameObject.setTint(0x00A86B);
+          let molarity = gameObject.moles / gameObject.volume;
+          this.playerHealth = this.playerHealth + molarity;
+          this.player_castle_health.setText(String(this.playerHealth));
+          this.healed = true;
+          let heal = this.add.text(10, 80, String(gameObject.moles) + " moles / " + String(gameObject.volume) + " liters = " + String(molarity) + "M")
+        }
+      }
     })
   }
 
@@ -264,7 +281,7 @@ export default class MainScene extends Phaser.Scene {
           this.player_castle_health.setText(String(this.playerHealth));
         }
       }
-      let dmgmark = this.add.text(this.player_castle.x+50, this.player_castle.y, "-" + String(totdmg) + "(from moles)", {fill: 'red', font: '16px Arial'});
+      let dmgmark = this.add.text(this.player_castle.x+50, this.player_castle.y, "-" + String(totdmg) + " (from moles)", {fill: 'red', font: '16px Arial'});
       this.time.delayedCall(2000, () => {
         this.tweens.add({
           targets: dmgmark,

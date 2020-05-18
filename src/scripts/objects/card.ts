@@ -66,12 +66,12 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             this.cardType = scene.add.text(this.x, this.y, 'Acid', {font: "10px Arial", fill: "black"});
             this.value = 1;
             this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
-            this.heal = scene.add.text(this.x, this.y, "vol: " + String(this.volume), {font: "10px Arial", fill: "black"});
+            this.heal = scene.add.text(this.x, this.y, "vol(L): " + String(this.volume), {font: "10px Arial", fill: "black"});
         } else {
             this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "white"});
             this.value = 0;
             this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "white"});
-            this.heal = scene.add.text(this.x, this.y, "vol: " + String(this.volume), {font: "10px Arial", fill: "white"});
+            this.heal = scene.add.text(this.x, this.y, "vol(L): " + String(this.volume), {font: "10px Arial", fill: "white"});
         }
 
         /* var container = scene.add.container(x,y);
