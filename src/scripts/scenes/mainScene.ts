@@ -146,7 +146,7 @@ export default class MainScene extends Phaser.Scene {
           this.enemy_castle_health.setText(String(this.enemyHealth));
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
-          this.tempECard.heal.destroy();
+          //this.tempECard.heal.destroy();
           let destroyedX = this.tempECard.x; let destroyedY = this.tempECard.y;
           const index = this.eCardGroup.indexOf(this.tempECard);
           if (index > -1) {
@@ -181,17 +181,33 @@ export default class MainScene extends Phaser.Scene {
     })
 
     //this.input.mouse.disableContextMenu();
-    this.input.on('pointerdown', (pointer, gameObject) => {
-      if (/* gameObject instanceof Card &&  *//* gameObject.onBoard &&  */pointer.rightButtonDown()/*  && this.healed == false */) {
-        if (gameObject instanceof Card) {
-          console.log('healed');
-          //gameObject.setTint(0x00A86B);
-          let molarity = gameObject.moles / gameObject.volume;
-          this.playerHealth = this.playerHealth + molarity;
-          this.player_castle_health.setText(String(this.playerHealth));
-          this.healed = true;
-          let heal = this.add.text(10, 80, String(gameObject.moles) + " moles / " + String(gameObject.volume) + " liters = " + String(molarity) + "M")
-        }
+    this.input.on('gameobjectdown', (pointer, gameObject) => {
+    if (gameObject instanceof Card && gameObject.onBoard && pointer.rightButtonDown() && !this.healed) {
+        console.log('healed');
+        //gameObject.setTint(0x00A86B);
+        let molarity = gameObject.moles / gameObject.volume;
+        this.playerHealth = this.playerHealth + molarity;
+        this.player_castle_health.setText(String(this.playerHealth));
+        this.healed = true;
+        let heal = this.add.text(10, 80, String(gameObject.moles) + " moles / " + String(gameObject.volume) + " liters = " + String(molarity) + "M", {fill: 'black', font: '16px Arial'});
+        this.time.delayedCall(1500, () => {
+          this.tweens.add({
+            targets: heal,
+            duration: 1500,
+            alpha: 0,
+            onComplete: () => heal.destroy()
+          });
+        })
+      } else if (this.healed && gameObject instanceof Card && gameObject.onBoard && pointer.rightButtonDown()) {
+        let error = this.add.text(10,80, 'You have already healed this turn', {fill: 'black', font: '16px Arial'});
+        this.time.delayedCall(1500, () => {
+          this.tweens.add({
+            targets: error,
+            duration: 1500,
+            alpha: 0,
+            oncComplete: () => error.destroy()
+          });
+        })
       }
     })
   }
@@ -352,8 +368,8 @@ export default class MainScene extends Phaser.Scene {
       j.cardType.x = j.x - 20;
       j.cardType.y = j.y - 25;
 
-      j.heal.x = j.x-20;//volume text
-      j.heal.y = j.y+10;
+      //j.heal.x = j.x-20;//volume text
+      //j.heal.y = j.y+10;
 
     }
 
