@@ -17,7 +17,7 @@ export default class MainScene extends Phaser.Scene {
 
   playerManaMax: number = 1;
   playerHealth: number = 30;
-  enemyHealth: number = 30
+  enemyHealth: number = 5
   enemyMana: number = 0;
   turn: number = 1;
   explanation: GameObjects.Text;
@@ -259,6 +259,8 @@ export default class MainScene extends Phaser.Scene {
         }
       }
       this.player_castle_health.setText(String(this.playerHealth));
+      if (this.playerHealth <= 0) {
+        this.add.text(this.scale.width/2 -90, this.scale.height/2-105, 'Better luck next time', {font: '24px Arial', fill: 'red'});      }
     }
     this.dealt = false;
     this.turn = 1;
@@ -277,7 +279,7 @@ export default class MainScene extends Phaser.Scene {
     }
     if (this.enemyHealth <= 0) {
       this.victory.play();
-      this.add.text(this.scale.width/2 -50, this.scale.height/2-40, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
+      this.add.text(this.scale.width/2 -50, this.scale.height/2-105, 'YOU WIN!!!', {font: '24px Arial', fill: 'magenta'});
     }
     
     for (let i of this.pCardGroup) {
