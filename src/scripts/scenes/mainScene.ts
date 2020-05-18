@@ -264,8 +264,8 @@ export default class MainScene extends Phaser.Scene {
           this.player_castle_health.setText(String(this.playerHealth));
         }
       }
-      let dmgmark = this.add.text(this.player_castle.x+50, this.player_castle.y, "-" + String(totdmg), {fill: 'red', font: '16px Arial'});
-      this.time.delayedCall(1000, () => {
+      let dmgmark = this.add.text(this.player_castle.x+50, this.player_castle.y, "-" + String(totdmg) + "(from moles)", {fill: 'red', font: '16px Arial'});
+      this.time.delayedCall(2000, () => {
         this.tweens.add({
           targets: dmgmark,
           duration: 1500,
@@ -300,14 +300,6 @@ export default class MainScene extends Phaser.Scene {
         });
       }
     });
-   /*  this.tweens.add({
-      targets: card,
-      ease: 'Linear',
-      duration: 200,
-      repeat: 0,
-      x: x,
-      y: y
-    }); */
   }
 
   update() {
