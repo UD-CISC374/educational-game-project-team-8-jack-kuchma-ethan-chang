@@ -46,7 +46,6 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             
             if (!(this.startX > (dropZoneOutline.x - dropZoneOutline.width/2) && this.startX < (dropZoneOutline.x + dropZoneOutline.width/2)
                 && this.startY > (dropZoneOutline.y - dropZoneOutline.height/2) && this.startY < (dropZoneOutline.y + dropZoneOutline.height/2))) {
-                // dropZoneOutline.data.values.cards++;
                 scene.pCardBoard += 1;
                 scene.pCardHand -= 1;
                 for (let i of scene.pCardGroup) {
@@ -67,12 +66,12 @@ export default class Card extends Phaser.Physics.Arcade.Image {
             this.cardType = scene.add.text(this.x, this.y, 'Acid', {font: "10px Arial", fill: "black"});
             this.value = 1;
             this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "black"});
-            this.heal = scene.add.text(this.x, this.y, "volume: " + String(this.volume), {font: "10px Arial", fill: "black"});
+            this.heal = scene.add.text(this.x, this.y, "vol: " + String(this.volume), {font: "10px Arial", fill: "black"});
         } else {
             this.cardType = scene.add.text(this.x, this.y, 'Base', {font: "10px Arial", fill: "white"});
             this.value = 0;
             this.attack = scene.add.text(this.x, this.y, "moles: " + String(this.moles), {font: "10px Arial", fill: "white"});
-            this.heal = scene.add.text(this.x, this.y, "volume: " + String(this.volume), {font: "10px Arial", fill: "white"});
+            this.heal = scene.add.text(this.x, this.y, "vol: " + String(this.volume), {font: "10px Arial", fill: "white"});
         }
 
         /* var container = scene.add.container(x,y);

@@ -120,6 +120,7 @@ export default class MainScene extends Phaser.Scene {
           this.tempPCard.moles = 0;
           this.tempPCard.attack.destroy();
           this.tempPCard.cardType.destroy();
+          this.tempPCard.heal.destroy();
           let destroyedX = this.tempPCard.x; let destroyedY = this.tempPCard.y;
           //delete this.pCardGroup[this.pCardGroup.indexOf(this.tempPCard)];
           const index = this.pCardGroup.indexOf(this.tempPCard);
@@ -144,6 +145,7 @@ export default class MainScene extends Phaser.Scene {
           this.enemy_castle_health.setText(String(this.enemyHealth));
           this.tempECard.attack.destroy();
           this.tempECard.cardType.destroy();
+          this.tempECard.heal.destroy();
           let destroyedX = this.tempECard.x; let destroyedY = this.tempECard.y;
           const index = this.eCardGroup.indexOf(this.tempECard);
           if (index > -1) {
@@ -290,7 +292,7 @@ export default class MainScene extends Phaser.Scene {
       i.cardType.y = i.y - 10;
 
       i.heal.x = i.x-20;
-      i.heal.y = i.y-20
+      i.heal.y = i.y+10
     }
     for (let j of this.eCardGroup) {
       j.attack.x = j.x - 20;
@@ -300,7 +302,7 @@ export default class MainScene extends Phaser.Scene {
       j.cardType.y = j.y - 10;
 
       j.heal.x = j.x-20;//volume text
-      j.heal.y = j.y-20;
+      j.heal.y = j.y+10;
 
     }
 
