@@ -85,6 +85,29 @@ export default class MainScene extends Phaser.Scene {
         this.tempECard.setTint(0xff69b4);
         console.log(this.tempPCard.moles);//moles before reaction
         console.log(this.tempECard.moles);
+
+        if (this.tempPCard.value == 1) {
+          let eq = this.add.text(10, 80, String(this.tempPCard.moles) + " moles Acid - " + String(this.tempECard.moles) + " moles Base", {fill: 'black', font: '16px Arial'});
+          this.time.delayedCall(1000, () => {
+            this.tweens.add({
+              targets: eq,
+              duration: 500,
+              alpha: 0,
+              onComplete: () => eq.destroy()
+            });
+          })
+        } else {
+          let eq = this.add.text(10, 80, String(this.tempPCard.moles) + " moles Base - " + String(this.tempECard.moles) + " moles Acid", {fill: 'black', font: '16px Arial'});
+          this.time.delayedCall(1500, () => {
+            this.tweens.add({
+              targets: eq,
+              duration: 1500,
+              alpha: 0,
+              onComplete: () => eq.destroy()
+            });
+          })
+        }
+
         let temptemp = this.tempPCard.moles;
         this.tempPCard.moles = this.tempPCard.moles - this.tempECard.moles;
         this.tempECard.moles = this.tempECard.moles - temptemp;
