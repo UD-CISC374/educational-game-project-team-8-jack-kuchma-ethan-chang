@@ -16,8 +16,8 @@ export default class MainScene extends Phaser.Scene {
   zone: Phaser.GameObjects.Zone;
 
   playerManaMax: number = 1;
-  playerHealth: number = 30;
-  enemyHealth: number = 5
+  playerHealth: number = 40;
+  enemyHealth: number = 20
   enemyMana: number = 0;
   turn: number = 1;
   explanation: GameObjects.Text;
@@ -218,7 +218,7 @@ export default class MainScene extends Phaser.Scene {
 
   dealCards() {
     console.log("dealt cards");
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       let r = Math.random();
       if (r > 0.5) {
         this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2),Math.floor(4 * Math.random() + 2));
@@ -255,17 +255,59 @@ export default class MainScene extends Phaser.Scene {
       } else {
         this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1),Math.floor(4 * Math.random() + 1));
       }
+      let totdmg = 0;
       for (let j of this.eCardGroup) {
         if (j.onBoard) {
+          totdmg = totdmg + j.moles;
+          this.time.delayedCall(500, this.attack, [j, j.x, j.y], this);
           this.playerHealth = this.playerHealth - j.moles;
+          this.player_castle_health.setText(String(this.playerHealth));
         }
       }
-      this.player_castle_health.setText(String(this.playerHealth));
+      let dmgmark = this.add.text(this.player_castle.x+50, this.player_castle.y, "-" + String(totdmg), {fill: 'red', font: '16px Arial'});
+      this.time.delayedCall(1000, () => {
+        this.tweens.add({
+          targets: dmgmark,
+          duration: 1500,
+          alpha: 0,
+          onComplete: () => dmgmark.destroy()
+        });
+      })
       if (this.playerHealth <= 0) {
-        this.add.text(this.scale.width/2 -90, this.scale.height/2-105, 'Better luck next time', {font: '24px Arial', fill: 'red'});      }
+        this.add.text(this.scale.width/2 -90, this.scale.height/2-105, 'Better luck next time', {font: '24px Arial', fill: 'red'});
+      }
     }
     this.dealt = false;
     this.turn = 1;
+  }
+  
+  attack(card,x,y) {
+    this.tweens.add({
+      targets: card,
+      ease: 'Linear',
+      duration: 300,
+      repeat: 0,
+      x: this.player_castle.x,
+      y: this.player_castle.y,
+      onComplete: () => {
+        this.tweens.add({
+          targets: card,
+          ease: 'Linear',
+          duration: 200,
+          repeat: 0,
+          x: x,
+          y: y
+        });
+      }
+    });
+   /*  this.tweens.add({
+      targets: card,
+      ease: 'Linear',
+      duration: 200,
+      repeat: 0,
+      x: x,
+      y: y
+    }); */
   }
 
   update() {
@@ -289,7 +331,7 @@ export default class MainScene extends Phaser.Scene {
       i.attack.y = i.y;
 
       i.cardType.x = i.x - 20;
-      i.cardType.y = i.y - 10;
+      i.cardType.y = i.y - 25;
 
       i.heal.x = i.x-20;
       i.heal.y = i.y+10
@@ -299,7 +341,7 @@ export default class MainScene extends Phaser.Scene {
       j.attack.y = j.y;
 
       j.cardType.x = j.x - 20;
-      j.cardType.y = j.y - 10;
+      j.cardType.y = j.y - 25;
 
       j.heal.x = j.x-20;//volume text
       j.heal.y = j.y+10;
