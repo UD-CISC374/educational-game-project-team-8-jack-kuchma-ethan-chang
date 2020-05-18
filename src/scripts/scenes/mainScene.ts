@@ -214,11 +214,11 @@ export default class MainScene extends Phaser.Scene {
     for (let i = 0; i < 4; i++) {
       let r = Math.random();
       if (r > 0.5) {
-        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2));
-        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1));
+        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2),Math.floor(4 * Math.random() + 2));
+        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1),Math.floor(4 * Math.random() + 2));
       } else {
-        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2));
-        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1));
+        this.playerCard = new Card(this, 20 + (i*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2), Math.floor(4 * Math.random() + 2));
+        this.enemyCard = new ECard(this, 120 + (i*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1),Math.floor(4 * Math.random() + 2));
       }
     }
   }
@@ -230,9 +230,9 @@ export default class MainScene extends Phaser.Scene {
     if (!this.dealt) {
       let r = Math.random();
       if (r > 0.5) {
-        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2));
+        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'red_flask', Math.floor(4 * Math.random() + 2),Math.floor(4 * Math.random() + 2));
       } else {
-        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2));
+        this.playerCard = new Card(this, 20 + (this.pCardHand*50), this.scale.height - 45, 'blue_flask', Math.floor(4 * Math.random() + 2),Math.floor(4 * Math.random() + 2));
       }
     }
     this.dealt = true;
@@ -244,9 +244,9 @@ export default class MainScene extends Phaser.Scene {
     if (this.dealt) {
       let r = Math.random();
       if (r > 0.5) {
-        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1));
+        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'red_flask', Math.floor(4 * Math.random() + 1),Math.floor(4 * Math.random() + 1));
       } else {
-        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1));
+        this.enemyCard = new ECard(this, 120 + (this.eCardBoard*50), this.scale.height/2 - 40, 'blue_flask', Math.floor(4 * Math.random() + 1),Math.floor(4 * Math.random() + 1));
       }
     }
     this.dealt = false;
@@ -272,14 +272,23 @@ export default class MainScene extends Phaser.Scene {
     for (let i of this.pCardGroup) {
       i.attack.x = i.x - 20;
       i.attack.y = i.y;
+
       i.cardType.x = i.x - 20;
       i.cardType.y = i.y - 10;
+
+      i.heal.x = i.x-20;
+      i.heal.y = i.y-20
     }
     for (let j of this.eCardGroup) {
       j.attack.x = j.x - 20;
       j.attack.y = j.y;
+
       j.cardType.x = j.x - 20;
       j.cardType.y = j.y - 10;
+
+      j.heal.x = j.x-20;
+      j.heal.y = j.y-20;
+
     }
 
     if (!this.tutorialTextArray.length) {
