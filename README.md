@@ -1,7 +1,13 @@
 # Title: NaCl The Base is Under Assault
 
 # Elevator Pitch
-This is a turn-based card game. The player plays against a bot and attempts to defeat the enemy by attacking it with chemistry cards they place down on the board. These cards are either an acid or base. The cards contain stats of moles and volume. Right clicking your card on the board heals you for it's molarity value. Moles is the card's health as well as the damage done to other cards. Take the enemy's health to 0 before they do to yours.
+Ethan: We created a card game that revolves around chemistry. More specifically -- excess and limiting reactants, acid-base reactions, and calculating molarity.
+
+Jack: The player plays cards from their hand. Then, the cards on the board be interacted with.
+
+Ethan: Cards are of two types -- acid and base. An acid card can only attack a base card and vice versa. Additionally, each card has stats of moles. If the player is the one with excess moles when attacking a card, the excess moles is converted to damage against the castle. The player's cards also has a volume stat, used for calculating molarity.
+
+Jack: Right clicking your card will heal your castle based on it's molarity. Every enemy's turn, their cards will damage your castle for each card's moles. When your castle reaches 0, you lose. When the enemy's castle health goes to 0, the player wins.
 
 # Basic Instructions
 Go through the instructions; click on each instruction box to read the next instruction.
