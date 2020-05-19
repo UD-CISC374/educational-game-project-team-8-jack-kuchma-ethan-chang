@@ -227,7 +227,7 @@ export default class MainScene extends Phaser.Scene {
 
   runTutorial(messageNumber: number): void {
     let handCardText: string = "These cards are either acid or base.                                                  [Click]\n Mole is the card's health as well as the damage done to the other cards.";
-    let molarity: string  = "Your cards also have volume, which you can calculate to get molarity (moles/volume), which can heal you.\n Right click one of your cards to calculate molarity"
+    let molarity: string  = "Your cards also have volume, which you can calculate to get molarity (moles/volume), which can heal you. \nRight click one of your cards to calculate molarity"
     let fieldText: string = "This is the battlefield where you can drag and drop cards.\n When it's on the board, click on your card then an enemy card to attack."
     let attackText: string = "When attacking, if your card is the excess reagent,\n damage is done to the enemy castle based on your excess moles."
     let winText: string  = "Take the enemy castle's health down to 0 to win!"
