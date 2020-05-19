@@ -37,12 +37,13 @@ This is a turn-based card game. The player plays against a bot and attempts to d
 
 ## Core Gameplay Mechanics (Brief)
 
-- Each player starts with 3 cards in their hand and draws one from their deck every turn, including the first turn. The player who goes second (i.e. the enemy bot), will start with 4 cards rather than 3 to balance our the fairness.
+- Each player starts with 2 cards in their hand and draws one from their deck every turn, including the first turn. The player who goes second (i.e. the enemy bot), will start with 4 cards rather than 3 to balance our the fairness.
 - Play acid or base cards from your hand by clicking and dragging them onto the board, which has seven card spaces for each player. When the card is placed down, it cannot attack until the player's next turn.
 - Click and drag a card from your side of the board to a card on the other side of the board to attack/neutralize it.
 - Acids can only attack bases and vice versa. Acids cannot attack acids and bases cannot attack bases.
 - During an attack between two cards, each card takes damage based on the moles neutralized in the reaction aka the other card's moles. Health points are recalculated and updated for each card. If it's health (moles) is less than or equal to 0, it's destroyed.
-- Attacking the other player directly with an acid or base card on the board deals damage based on the card's molarity.
+- If your card has excess moles, it deals that amount as damage to the enemy castle.
+- Once per turn, you may right click a card on the board to heal your castle by the molarity of the card (moles / volume)
 - When a player's health reaches 0, they lose.
 
 # Learning Aspects
@@ -102,14 +103,17 @@ This is a game for one person. They draw cards, play them, and use them to attac
 - Attack the enemy:
     - Description: Beat the enemy by attacking it with cards. When its health reaches 0, you win.
     - Alignment: You have to go through all the learning objectives of being able to calculate and predict the outcomes of reactions to clear their board and beat the enemy.
+- Heal your castle:
+    - Description: Heal the enemy's attacks
+    - Alignment: You heal based on the card's molarity, which can be calculated from moles/volume(in liters)
 
 # Procedures/Actions
 
-You can drag cards from your hand to the battlefield -- these cards can't attack until your next turn. You can drag cards on the battlefield from your side to a card on the other side to attack it. You can also drag cards on the battlefield from your side to the enemy directly to attack them.
+You can drag cards from your hand to the battlefield. You can then click on you card and any enemy card of opposite type to attack it. You can also right click your card on the board to heal yourself.
 
 # Rules
 
-- Action Points: The player starts out with one action point when the game starts and gains another at the start of turn (i.e. Turn 1 = 1 action point. Turn 2 = 2 action points. Etc.). This can be used to spend on playing cards and putting them on the board.
+- Action Points: The player starts out with one action point when the game starts and gains another at the start of turn (i.e. Turn 1 = 1 action point. Turn 2 = 2 action points. Etc.). This can be used to spend on playing cards and putting them on the board. (Warning: not implemented due to significantly slower gameplay!)
 - Cards: The player can play the cards from their hand (provided they have enough action points) and draw one at the start of their turn.
 
 # Objects/Entities
@@ -120,7 +124,7 @@ You can drag cards from your hand to the battlefield -- these cards can't attack
 ## Core Gameplay Mechanics (Detailed)
 
 - Turns: A player has a turn to play the cards they want from their hand, trade into other cards, and attack the opponent. Each turn the player draws a card.
-- Action points: Cards cost a certain amount of action points to play. Each turn the player's action points refreshes and gains +1 action point.
+- Action points: Cards cost a certain amount of action points to play. Each turn the player's action points refreshes and gains +1 action point. (Warning: not implemented due to significantly slower gameplay).
 
 ## Feedback
 
@@ -133,11 +137,11 @@ You can drag cards from your hand to the battlefield -- these cards can't attack
 
 ## Presentation of Rules
 
-- When the player first opens the game, they could go through a tutorial to get them used to the mechanics and how all the cards interact with each other
+- When the player first opens the game, they go through a set of short instructions to get them used to the mechanics and how all the cards interact with each other
 
 ## Presentation of Content
 
-- The tutorial will be multiple, small tutorials, in which it introduces each chemistry concept (acids, bases, etc.), then puts them all together in the regular gamemode.
+- The tutorial will be multiple, small instruction boxes, in which it introduces each chemistry concept (acids, bases, etc.), then puts them all together in the regular gamemode.
 - As the game proceeds, the player will have to consistently implement the concepts of the core material to make the most advantageous moves that will help win the game.
 
 ## Story (Brief)
