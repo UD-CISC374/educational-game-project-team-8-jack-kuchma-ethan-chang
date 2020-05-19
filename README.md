@@ -9,6 +9,9 @@ Drag cards onto the board. Then left click it and an enemy card of opposite type
 Once per turn, you can right click your card on the board to heal your castle by a certain amount, namely the molarity of the card.
 Note: molarity = moles / volume
 Take the enemy's health to 0 and you win. If your health goes to 0, you lose.
+
+![Large Screenshot](https://github.com/UD-CISC374/educational-game-project-team-8-jack-kuchma-ethan-chang/tree/master/src/assets/screenshots/large.png)
+
 # educational-phaser-game-template
 
 Template for designing educational Phaser Games
