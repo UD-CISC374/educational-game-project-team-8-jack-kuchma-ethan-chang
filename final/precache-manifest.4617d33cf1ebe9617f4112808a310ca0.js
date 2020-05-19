@@ -80,11 +80,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/educational-game-project-team-8-jack-kuchma-ethan-chang/finalgen.vendors.0805bb80903235d40eaf.bundle.js"
   },
   {
-    "revision": "9b0aa66694c73a8c5e84ba42a54bb965",
+    "revision": "2657894c98baba92afb0411538ff3212",
     "url": "/educational-game-project-team-8-jack-kuchma-ethan-chang/finalindex.html"
   },
   {
-    "revision": "a1478803ba805258fa51ac7b0f32cd56",
+    "revision": "21594a19cb65ecd556d81c52f647abe6",
     "url": "/educational-game-project-team-8-jack-kuchma-ethan-chang/finalmanifest.json"
   },
   {
