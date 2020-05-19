@@ -227,23 +227,27 @@ export default class MainScene extends Phaser.Scene {
 
   runTutorial(messageNumber: number): void {
     let handCardText: string = "These cards are either acid or base.                                                  [Click]\n Mole is the card's health as well as the damage done to the other cards.";
+    let molarity: string  = "Your cards also have volume, which you can calculate to get molarity (moles/volume), which can heal you. \nRight click one of your cards to calculate molarity"
     let fieldText: string = "This is the battlefield where you can drag and drop cards.\n When it's on the board, click on your card then an enemy card to attack."
     let attackText: string = "When attacking, if your card is the excess reagent,\n damage is done to the enemy castle based on your excess moles."
     let winText: string  = "Take the enemy castle's health down to 0 to win!"
-    let stringList: Array<string> = [handCardText, fieldText, attackText, winText];
+    let stringList: Array<string> = [handCardText, molarity, fieldText, attackText, winText];
     if (messageNumber > stringList.length-1)
       return;
     switch(messageNumber) {
       case 0: // handCard Text
         this.makeText(stringList[messageNumber], -110, 100); // Display it above the cards
         break;
-      case 1: // field Text
+      case 1:
+        this.makeText(stringList[messageNumber], 0,100); //Display it above the cards
+        break;
+      case 2: // field Text
         this.makeText(stringList[messageNumber], -110, 40); // Display it in the battlefield
         break;
-      case 2: // attack Text
+      case 3: // attack Text
         this.makeText(stringList[messageNumber], -110, 40);//Display in the battlefield
         break;
-      case 3: // winText
+      case 4: // winText
         this.makeText(stringList[messageNumber], 176, -150);//Display right of castle
         break;
     }
