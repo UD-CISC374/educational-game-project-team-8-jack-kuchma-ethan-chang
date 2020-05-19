@@ -44,8 +44,9 @@ These [package.json](package.json) settings are for configuring the metadata of 
 * `repository`:
     * `url`: https://github.com/UD-CISC374/educational-game-project-team-8-jack-kuchma-ethan-chang
 * `homepage`: https://github.com/UD-CISC374/educational-game-design-document-team-8-jack-kuchma-ethan-chang
-* `contributors`: `"Jacob Kuchma <jkuchma@udel.edu>", "Ethan Chang <etchang@udel.edu>"`.
 * `video url` : https://youtu.be/28tN_4gUb34 
+* `contributors`: `"Jacob Kuchma <jkuchma@udel.edu>", "Ethan Chang <etchang@udel.edu>"`.
+
 
 You should edit the following images to create icons for your game, if it gets installed as a [Progressive Web App](https://medium.com/@amberleyjohanna/seriously-though-what-is-a-progressive-web-app-56130600a093):
 
