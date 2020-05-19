@@ -3,7 +3,7 @@
 # Elevator Pitch
 Ethan: We created a card game that revolves around chemistry. More specifically -- excess and limiting reactants, acid-base reactions, and calculating molarity.
 
-Jack: The player plays cards from their hand. Then, the cards on the board be interacted with.
+Jack: The player plays cards from their hand. Then, the cards on the board can be interacted with.
 
 Ethan: Cards are of two types -- acid and base. An acid card can only attack a base card and vice versa. Additionally, each card has stats of moles. If the player is the one with excess moles when attacking a card, the excess moles is converted to damage against the castle. The player's cards also has a volume stat, used for calculating molarity.
 
