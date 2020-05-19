@@ -1,4 +1,7 @@
 # Title: NaCl The Base is Under Assault
+
+# Elevator Pitch
+This is a turn-based card game. The player plays against a bot and attempts to defeat the enemy by attacking it with chemistry cards they place down on the board. These cards are either an acid or base. The cards contain stats of moles and volume. Right clicking your card on the board heals you for it's molarity value. Moles is the card's health as well as the damage done to other cards. Take the enemy's health to 0 before they do to yours.
 # educational-phaser-game-template
 
 Template for designing educational Phaser Games
